@@ -1,0 +1,17 @@
+// Create a config.js file on this folder and fill in the proper configuration settings
+const config = {
+  production: {
+    facebook: {
+      clientID: 'XXX',
+      clientSecret: 'XXX',
+    },
+  },
+  default: {
+    facebook: {
+      clientID: 'XXX',
+      clientSecret: 'XXX',
+    },
+  },
+};
+
+exports.get = env => (config[env] || config.default);
