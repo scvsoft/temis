@@ -1,11 +1,16 @@
 import express from 'express';
+import * as bodyParser from 'body-parser';
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.use(bodyParser.json());
+
+app.get('/reports', (req, res) => {
+  res.json([]);
 });
 
-app.listen(3000, () => {
-  console.log('Temis server listening on port 3000!');
+app.put('/reports', (req, res) => {
+  res.status(201).end();
 });
+
+app.listen(3000);
