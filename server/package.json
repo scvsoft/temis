@@ -1,0 +1,27 @@
+{
+  "name": "temis-server",
+  "version": "1.0.0",
+  "description": "Backend for Temis: A voice to report acts of violence and create awareness",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node  src/index.js",
+    "dev": "nodemon src/index.js --exec babel-node",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d dist",
+    "serve": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scvsoft/temis"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "nodemon": "^1.12.1"
+  }
+}
