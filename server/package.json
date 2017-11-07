@@ -6,7 +6,7 @@
   "scripts": {
     "start": "babel-node  src/main.js",
     "dev": "nodemon src/main.js --exec babel-node",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --compilers js:babel-register",
     "build": "babel src -d dist",
     "serve": "node dist/main.js"
   },
@@ -27,9 +27,12 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
     "eslint": "^4.10.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
+    "mocha": "^4.0.1",
     "nodemon": "^1.12.1"
   }
 }
