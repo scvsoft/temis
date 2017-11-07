@@ -7,6 +7,22 @@ Run `npm install`
 ## Test
 Pending
 
+- Go to your Facebook app (https://developers.facebook.com/apps)
+- Go to Roles -> Test users
+- Get an access token from one of your test users
+- Launch the server with `npm start``
+- Do a POST http://localhost:3000/auth/facebook with json body
+````
+{
+	"access_token": "YOUR_TOKEN"
+}
+````
+- If the response is 200 OK, check the custom header `x-auth-token`
+- Pass that same custom header in every subsequent request, such as:
+````
+GET http://localhost:3000/auth/me
+````
+
 ## Run
 
 - `npm start` will start the development server
