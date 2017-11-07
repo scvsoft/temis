@@ -2,7 +2,8 @@
 A voice to report acts of violence and create awareness 
 
 ## Setup
-Run `npm install`
+- Run `npm install`
+- Copy the file `config.js.sample` into `config.js` and provide the correct settings.
 
 ## Test
 Pending
