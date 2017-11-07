@@ -5,8 +5,6 @@ import PanicButton from 'app/Components/PanicButton'
 import images from 'app/Theme/images'
 import styles from './style'
 
-const remote = 'https://s15.postimg.org/tw2qkvmcb/400px.png'
-
 export default class Help extends Component {
   render() {
     return (
