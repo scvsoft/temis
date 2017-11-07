@@ -5,13 +5,21 @@ const config = {
       clientID: 'XXX',
       clientSecret: 'XXX',
     },
+    jwt: {
+      secret: 'XXX',
+      expiration: 60 * 120, // in seconds
+    },
   },
   default: {
     facebook: {
       clientID: 'XXX',
       clientSecret: 'XXX',
     },
+    jwt: {
+      secret: 'XXX',
+      expiration: 60 * 120, // in seconds
+    },
   },
 };
 
-exports.get = env => (config[env] || config.default);
+export default env => (config[env] || config.default);

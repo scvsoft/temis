@@ -1,11 +1,8 @@
 import passport from 'passport';
 import FacebookTokenStrategy from 'passport-facebook-token';
 import Users from '../models/user';
-import getConfig from '../config';
 
-const config = getConfig(process.env.NODE_ENV);
-
-export default () => {
+export default (config) => {
   passport.use(new FacebookTokenStrategy(
     {
       clientID: config.facebook.clientID,
@@ -13,10 +10,6 @@ export default () => {
     },
     (accessToken, refreshToken, profile, done) => {
       // save user in memory
-      console.log(profile);
-      // profile.id
-      // profile.displayName
-      // profile.emails[0].value
       const user = {
         fullName: profile.displayName,
         email: profile.emails[0].value,
