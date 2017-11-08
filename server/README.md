@@ -6,7 +6,8 @@ A voice to report acts of violence and create awareness
 - Copy the file `config.js.sample` into `config.js` and provide the correct settings.
 
 ## Test
-Pending
+
+### Running the app
 
 - Go to your Facebook app (https://developers.facebook.com/apps)
 - Go to Roles -> Test users
@@ -23,6 +24,9 @@ Pending
 ````
 GET http://localhost:3000/auth/me
 ````
+
+### Testing
+`npm test`
 
 ## Run
 
