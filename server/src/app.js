@@ -37,7 +37,7 @@ const createApp = (config) => {
 
   app.post('/auth/facebook', passport.authenticate('facebook-token', { session: false }), (req, res, next) => {
     if (!req.user) {
-      res.send(401, 'User Not Authenticated');
+      res.status(401).send('User Not Authenticated');
     } else {
       // prepare token for API
       req.auth = {
@@ -87,8 +87,6 @@ const createApp = (config) => {
   app.put('/reports', authenticate, (req, res) => {
     res.status(201).end();
   });
-
-  app.listen(config.port || 3000);
 
   return app;
 };
