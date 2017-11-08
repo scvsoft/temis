@@ -1,5 +1,5 @@
 const images = {
-  background: require('../Images/textura.png')
+  background: require('../Images/texture.png')
 }
 
 export default images

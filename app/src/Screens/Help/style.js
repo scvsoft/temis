@@ -5,8 +5,7 @@ export default StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
-    backgroundColor: 'yellow'
+    height: '100%'
   },
   background: {
     position: 'absolute',
