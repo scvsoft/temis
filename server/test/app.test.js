@@ -2,7 +2,7 @@ import nock from 'nock';
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import http from 'http';
-import createApp from '../src/app';
+import { createApp, createToken } from '../src/app';
 
 const config = {
   facebook: {
@@ -21,6 +21,46 @@ const server = http.createServer(app);
 chai.use(chaiHttp);
 
 describe('Server', () => {
+  describe('JWT Authentication', () => {
+    it('returns a valid response if JWT token is present and valid', (done) => {
+      const token = createToken({ id: 1001 }, config);
+
+      chai.request(server)
+        .get('/reports')
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('returns an authentication response error if JWT token is not present', (done) => {
+      chai.request(server)
+        .get('/reports')
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
+
+    it('returns an authentication response error if JWT token is expired', (done) => {
+      const token = createToken({ id: 1001 }, {
+        jwt: {
+          secret: 'f444WXmFIVxxbo3MvQndRGZ5',
+          expiration: 0, // in seconds
+        },
+      });
+
+      chai.request(server)
+        .get('/reports')
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
+  });
+
   describe('Facebook Authentication', () => {
     // it('should return 401 status when not authenticated');
 
@@ -52,7 +92,7 @@ describe('Server', () => {
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res).to.have.header('x-auth-token');
-          done(err);
+          done();
         });
     });
 
@@ -62,7 +102,7 @@ describe('Server', () => {
         .send({ access_token: 'invalid_token' })
         .end((err, res) => {
           expect(res).to.have.status(500);
-          done(err);
+          done();
         });
     });
   });

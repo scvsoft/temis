@@ -6,7 +6,16 @@ import passport from 'passport';
 import passportConfig from './lib/facebook';
 import Users from './models/user';
 
-const createApp = (config) => {
+export const createToken = (auth, config) => jwt.sign(
+  {
+    id: auth.id,
+  }, config.jwt.secret,
+  {
+    expiresIn: config.jwt.expiration,
+  },
+);
+
+export const createApp = (config) => {
   const app = express();
 
   app.use(bodyParser.json());
@@ -16,23 +25,14 @@ const createApp = (config) => {
   // setup configuration for facebook login
   passportConfig(config);
 
-  const createToken = auth => jwt.sign(
-    {
-      id: auth.id,
-    }, config.jwt.secret,
-    {
-      expiresIn: 60 * 120,
-    },
-  );
-
-  const generateToken = (req, res, next) => {
-    req.token = createToken(req.auth);
-    next();
-  };
-
   const sendToken = (req, res) => {
     res.setHeader('x-auth-token', req.token);
     res.status(200).send(req.auth);
+  };
+
+  const generateToken = (req, res, next) => {
+    req.token = createToken(req.auth, config);
+    next();
   };
 
   app.post('/auth/facebook', passport.authenticate('facebook-token', { session: false }), (req, res, next) => {
@@ -91,4 +91,3 @@ const createApp = (config) => {
   return app;
 };
 
-export default config => (createApp(config));
