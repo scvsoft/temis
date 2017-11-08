@@ -3,12 +3,15 @@ import { colors, metrics, fonts } from 'app/Theme'
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: colors.title,
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%'
   },
-
+  background: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%'
+  },
   buttonDesc: {
     ...fonts.text,
     color: colors.text,
