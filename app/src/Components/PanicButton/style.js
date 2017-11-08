@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native'
-import Colors from 'app/Theme/colors'
+import { colors, fonts } from 'app/Theme'
 
 export default StyleSheet.create({
   button: {
-    backgroundColor: Colors.danger,
+    backgroundColor: colors.danger,
     width: 224,
     height: 224,
     justifyContent: 'center',
@@ -11,9 +11,8 @@ export default StyleSheet.create({
     borderRadius: 150
   },
   text: {
-    fontSize: 36,
-    fontWeight: 'bold',
+    ...fonts.h1,
     textAlign: 'center',
-    color: Colors.title
+    color: colors.title
   }
 })

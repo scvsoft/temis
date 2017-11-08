@@ -1,11 +1,18 @@
 import { StyleSheet } from 'react-native'
-import Colors from 'app/Theme/colors'
+import { colors, metrics, fonts } from 'app/Theme'
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: Colors.main,
+    backgroundColor: colors.title,
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%'
+  },
+
+  buttonDesc: {
+    ...fonts.text,
+    color: colors.text,
+    textAlign: 'center',
+    padding: metrics.padding
   }
 })
