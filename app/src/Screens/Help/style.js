@@ -14,6 +14,7 @@ export default StyleSheet.create({
   },
   buttonDesc: {
     ...fonts.text,
+    backgroundColor: 'transparent',
     color: colors.text,
     textAlign: 'center',
     padding: metrics.padding
