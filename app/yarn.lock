@@ -1878,6 +1878,10 @@ http-signature@~1.2.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
+i18n-js@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.0.2.tgz#d14cff2562758e7d30d34ddd58dd12d53fd07b5f"
+
 iconv-lite@0.4.11, iconv-lite@^0.4.8:
   version "0.4.11"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.11.tgz#2ecb42fd294744922209a2e7c404dac8793d8ade"
@@ -3289,6 +3293,12 @@ react-devtools-core@^2.5.0:
   dependencies:
     shell-quote "^1.6.1"
     ws "^2.0.3"
+
+react-native-i18n@^2.0.9:
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/react-native-i18n/-/react-native-i18n-2.0.9.tgz#cd2afcf184bbaa7244917d30a57e81e939f79b88"
+  dependencies:
+    i18n-js "^3.0.2"
 
 react-native@0.50.1:
   version "0.50.1"
