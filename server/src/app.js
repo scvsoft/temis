@@ -43,9 +43,8 @@ export const createApp = (config) => {
       req.auth = {
         id: req.user.id,
       };
-
-      next();
     }
+    next();
   }, generateToken, sendToken);
 
   // token handling middleware
@@ -78,6 +77,22 @@ export const createApp = (config) => {
     res.json(user);
   };
 
+  const errorHandler = (err, req, res, next) => {
+    //DEBUG && console.error("Error: ", err.name, err.message, err.status, err.stack)
+
+    // JWT
+    if (err.name === 'UnauthorizedError') {
+      res.status(401).send('invalid jwt token...');
+    }
+
+    // Facebook
+    if (err.name === 'InternalOAuthError') {
+      res.status(401).send('invalid facebook token...');
+    }
+
+    next();
+  };
+
   app.get('/auth/me', authenticate, getCurrentUser, getOne);
 
   app.get('/reports', authenticate, (req, res) => {
@@ -87,6 +102,8 @@ export const createApp = (config) => {
   app.put('/reports', authenticate, (req, res) => {
     res.status(201).end();
   });
+
+  app.use(errorHandler);
 
   return app;
 };

@@ -101,7 +101,7 @@ describe('Server', () => {
         .post('/auth/facebook')
         .send({ access_token: 'invalid_token' })
         .end((err, res) => {
-          expect(res).to.have.status(500);
+          expect(res).to.have.status(401);
           done();
         });
     });
