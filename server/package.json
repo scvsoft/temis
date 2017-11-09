@@ -7,6 +7,7 @@
     "start": "babel-node  src/main.js",
     "dev": "nodemon src/main.js --exec babel-node",
     "test": "mocha --require babel-register",
+    "test-watch": "mocha --require babel-register --watch",
     "build": "babel src -d dist",
     "serve": "node dist/main.js"
   },
