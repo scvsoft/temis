@@ -26,7 +26,7 @@ GET http://localhost:3000/auth/me
 ````
 
 ### Testing
-`npm test`
+`npm test` or `npm test:watch`. The last one watches your changes and executes all the tests.
 
 ## Run
 
