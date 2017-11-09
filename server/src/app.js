@@ -43,8 +43,8 @@ export const createApp = (config) => {
       req.auth = {
         id: req.user.id,
       };
+      next();
     }
-    next();
   }, generateToken, sendToken);
 
   // token handling middleware
