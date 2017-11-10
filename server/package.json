@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "precommit": "lint-staged",
-    "prepush": "lint-staged && npm run prettier && npm test",
+    "prepush": "lint-staged && npm test",
     "start": "babel-node src/index.js",
     "dev": "nodemon src/index.js --exec babel-node",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\"",
     "test-ci": "npm run lint && npm run test",
     "build": "babel src -d dist",
     "serve": "node dist/index.js",
