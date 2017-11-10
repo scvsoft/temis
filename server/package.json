@@ -12,7 +12,8 @@
     "test-ci": "npm run lint && npm run test",
     "build": "babel src -d dist",
     "serve": "node dist/index.js",
-    "lint:js": "prettier --write --config ../.prettierrc",
+    "lint": "npm run lint:js -- **/*.{js,jsx} && npm run lint:json -- **/*.json",
+    "lint:js": "prettier --config ../.prettierrc --write",
     "lint:json": "jsonlint"
   },
   "repository": {
