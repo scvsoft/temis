@@ -6,7 +6,7 @@
   "scripts": {
     "start": "babel-node  src/main.js",
     "dev": "nodemon src/main.js --exec babel-node",
-    "test": "mocha --require babel-register",
+    "test": "jest",
     "test:watch": "npm run test -- --watch",
     "build": "babel src -d dist",
     "serve": "node dist/main.js"
@@ -33,7 +33,7 @@
     "eslint": "^4.10.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "mocha": "^4.0.1",
+    "jest": "^21.2.1",
     "nock": "^9.0.28",
     "nodemon": "^1.12.1"
   }
