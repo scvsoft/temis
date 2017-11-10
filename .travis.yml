@@ -1,0 +1,24 @@
+language: node_js
+
+node_js:
+  - "stable"
+
+#services:
+#  - mongodb
+
+cache:
+  directories:
+    - "server/node_modules"
+
+install:
+  - npm --prefix app install
+  - npm --prefix server install
+
+#before_script:
+#  - sleep 15
+#  - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+
+script:
+  - npm --prefix app test
+  - npm --prefix server test
+
