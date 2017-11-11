@@ -7,7 +7,7 @@ import { createApp, createToken } from '../src/app';
 const config = {
   facebook: {
     clientID: '128732717834556',
-    clientSecret: 'fada2088cc5fcf83788c16285d3a535c',
+    clientSecret: 'XXX',
   },
   jwt: {
     secret: 'f444WXmFIVxxbo3MvQndRGZ5',
