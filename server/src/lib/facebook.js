@@ -6,8 +6,8 @@ export default config => {
   passport.use(
     new FacebookTokenStrategy(
       {
-        clientID: config.facebook.clientID,
-        clientSecret: config.facebook.clientSecret
+        clientID: process.env.FACEBOOK_CLIENTID,
+        clientSecret: process.env.FACEBOOK_CLIENTSECRET
       },
       (accessToken, refreshToken, profile, done) => {
         // save user in memory

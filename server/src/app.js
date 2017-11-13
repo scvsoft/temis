@@ -11,9 +11,9 @@ export const createToken = (auth, config) =>
     {
       id: auth.id
     },
-    config.jwt.secret,
+    process.env.JWT_SECRET,
     {
-      expiresIn: config.jwt.expiration
+      expiresIn: process.env.JWT_EXPIRATION
     }
   )
 
@@ -57,7 +57,7 @@ export const createApp = config => {
 
   // token handling middleware
   const authenticate = expressJwt({
-    secret: config.jwt.secret,
+    secret: process.env.JWT_SECRET,
     requestProperty: 'auth',
     getToken: req => {
       if (req.headers['x-auth-token']) {
