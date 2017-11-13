@@ -1,0 +1,29 @@
+---
+engines:
+  checkstyle:
+    enabled: true
+  eslint:
+    enabled: true
+  csslint:
+    enabled: true
+  nodesecurity:
+    enabled: true    
+  duplication:
+    enabled: true
+    checks:
+      Similar code:
+        enabled: true
+      Mass:
+        enabled: true
+    config:
+      languages:
+      - javascript
+ratings:
+  paths:
+  - app/**
+  - server/src/**
+exclude_paths:
+- __tests__/
+- tests/
+- node_modules/
+- coverage/
