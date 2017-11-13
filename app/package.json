@@ -3,8 +3,14 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
+		"precommit": "lint-staged",
+		"prepush": "lint-staged && npm test",
 		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
+		"test": "jest",
+		"test-ci": "npm run lint && npm run test",
+		"lint": "npm run lint:js -- **/*.{js,jsx} && npm run lint:json -- **/*.json",
+		"lint:js": "prettier --config ../.prettierrc --write",
+		"lint:json": "jsonlint"
 	},
 	"dependencies": {
 		"ramda": "^0.25.0",
@@ -16,10 +22,27 @@
 	"devDependencies": {
 		"babel-jest": "21.2.0",
 		"babel-preset-react-native": "4.0.0",
+		"husky": "^0.14.3",
 		"jest": "21.2.1",
+		"jsonlint": "^1.6.2",
+		"lint-staged": "^4.3.0",
+		"prettier": "^1.8.2",
 		"react-test-renderer": "16.0.0"
 	},
 	"jest": {
 		"preset": "react-native"
+	},
+	"lint-staged": {
+		"gitDir": "../",
+		"linters": {
+			"*.{js,jsx}": [
+				"npm run lint:js -- --write",
+				"git add"
+			],
+			"*.json": [
+				"npm run lint:json",
+				"git add"
+			]
+		}
 	}
 }
