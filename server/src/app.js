@@ -78,7 +78,7 @@ export const createApp = (config) => {
   };
 
   const errorHandler = (err, req, res, next) => {
-    //DEBUG && console.error("Error: ", err.name, err.message, err.status, err.stack)
+    // DEBUG && console.error("Error: ", err.name, err.message, err.status, err.stack)
 
     // JWT
     if (err.name === 'UnauthorizedError') {
