@@ -4,12 +4,19 @@
   "description": "Backend for Temis: A voice to report acts of violence and create awareness",
   "main": "main.js",
   "scripts": {
-    "start": "babel-node  src/main.js",
-    "dev": "nodemon src/main.js --exec babel-node",
+    "precommit": "lint-staged",
+    "prepush": "lint-staged && npm test",
+    "prestart": "npm run lint",
+    "start": "node src/main.js",
+    "dev": "nodemon --exec npm start",
     "test": "jest",
     "test:watch": "npm run test -- --watch",
+    "test-ci": "npm run lint && npm run test",
     "build": "babel src -d dist",
-    "serve": "node dist/main.js"
+    "serve": "node dist/main.js",
+    "lint": "npm run lint:js -- --write **/*.{js,jsx} && npm run lint:json -- **/*.json",
+    "lint:js": "prettier --config ../.prettierrc",
+    "lint:json": "jsonlint"
   },
   "repository": {
     "type": "git",
@@ -31,10 +38,26 @@
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
     "eslint": "^4.10.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0",
+    "eslint-config-react-app": "^2.0.1",
     "jest": "^21.2.1",
+    "husky": "^0.14.3",
+    "jsonlint": "^1.6.2",
+    "lint-staged": "^4.3.0",
+    "nodemon": "^1.12.1",
     "nock": "^9.0.28",
-    "nodemon": "^1.12.1"
+    "prettier": "^1.8.2"
+  },
+  "lint-staged": {
+    "gitDir": "../",
+    "linters": {
+      "*.{js,jsx}": [
+        "npm run lint:js -- --write",
+        "git add"
+      ],
+      "*.json": [
+        "npm run lint:json",
+        "git add"
+      ]
+    }
   }
 }
