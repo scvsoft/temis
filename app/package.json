@@ -8,7 +8,7 @@
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"test": "jest",
 		"test-ci": "npm run lint && npm run test --coverage && cat ./coverage/lcov.info | coveralls",
-		"lint": "npm run lint:js -- **/*.{js,jsx} && npm run lint:json -- **/*.json",
+		"lint": "npm run lint:js -- **/*.{js,jsx}",
 		"lint:js": "prettier --config ../.prettierrc --write",
 		"lint:json": "jsonlint"
 	},
