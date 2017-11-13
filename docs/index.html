@@ -20,21 +20,22 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Temis">
     <meta property="og:image" content="http://www.temis.care/opengraph.jpg">
-    <meta property="og:description" content="We believe that violence is a critical issue. And we want to create conscience about it and help bring to light the issue so we can make a difference.">
+    <meta property="og:description" content="We believe that violence is a critical issue. And we want to create conscience about it and help shine a light on the issue so we can make a difference.">
     <meta property="og:site_name" content="Temis">
     <meta property="og:locale" content="en_US">
-    <meta property="article:author" content="">
+    <meta property="article:author" content="SCVSoft">
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:url" content="http://www.temis.care">
     <meta name="twitter:title" content="Temis">
-    <meta name="twitter:description" content="We believe that violence is a critical issue. And we want to create conscience about it and help bring to light the issue so we can make a difference.">
+    <meta name="twitter:description" content="We believe that violence is a critical issue. And we want to create conscience about it and help shine a light on the issue so we can make a difference.">
     <meta name="twitter:image" content="http://www.temis.care/opengraph.jpg">
     <!-- Google -->
     <meta itemprop="name" content="Temis">
-    <meta itemprop="description" content="We believe that violence is a critical issue. And we want to create conscience about it and help bring to light the issue so we can make a difference.">
+    <meta itemprop="description" content="We believe that violence is a critical issue. And we want to create conscience about it and help shine a light on the issue so we can make a difference.">
     <meta itemprop="image" content="http://www.temis.care/opengraph.jpg">
     <!-- Styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
     <!-- For IE 10 and below -->
@@ -48,11 +49,248 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="header">
+        <div class="container">
+            <!-- Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="section-home">
+                <a class="navbar-brand" href="#section-home">
+                    <img src="assets/img/logo.svg" width="240" class="d-inline-block align-top" alt="Temis">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#section-home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#section-features">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#section-contactus">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- Navigation ends -->
+        </div>
+        <div class="container home-padding">
+            <div class="row">
+                <div class="col-md-6 mt-4">
+                    <h2>Alert, Report and raise awareness about violence</h2>
+                    <h4 class="mb-4">Report acts of violence, alert your friends during a crisis and visualize raw and hard data about a real issue</h4>
+                    <div class="downloadlinks py-3">
+                        Coming soon to Google Play and iOS App Store!
+                        <!-- Links 
+                        
+                            <a href="#" target="_blank"><img src="assets/img/download-android.png" alt="Download for Android"></a>
+                        <a href="#" target="_blank"><img src="assets/img/download-ios.svg" alt="Download for iPhone"></a>
+                        
+                        -->
 
-        <div class="logo"><img src="assets/img/logo.svg" alt="Temis logo"></div>
-        <div class="footer">Contact us <a href="mailto:here@temis.care">here@temis.care</a></div>
+                    </div>
+                    <p class="small">Temis was born as part of <a href="https://www.producthunt.com/upcoming/product-hunt-global-hackathon" target="_blank">Product Hunt's global hackaton</a> during November 2017.</p>
+                </div>
+                <div class="col-md-6 text-right">
+                    <img src="assets/img/screenshot.png" alt="Temis">
+                </div>
+            </div>
+
+        </div>
     </div>
+    <!-- Features begins -->
+    <div class="container py-5" id="section-features">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Features</h2>
+            </div>
+            <div class="col-lg-3 mb-4">
+                <div class="card">
+                    <div class="feature-img"><img src="assets/img/feature-01.svg" alt="Feature"></div>
+                    <div class="card-body">
+                        <h4 class="card-title">Alert</h4>
+                        <p class="card-text">Send an alert to your closest contacts and friends on social networks when you feel in danger.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 mb-4">
+                <div class="card">
+                    <div class="feature-img"><img src="assets/img/feature-02.svg" alt="Feature"></div>
+                    <div class="card-body">
+                        <h4 class="card-title">Report</h4>
+                        <p class="card-text">When the danger has passed, create a report telling everyone about your experience.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 mb-4">
+                <div class="card">
+                    <div class="feature-img"><img src="assets/img/feature-03.svg" alt="Feature"></div>
+                    <div class="card-body">
+                        <h4 class="card-title">Stats</h4>
+                        <p class="card-text">Visualize what our user network has been reporting on a day-to-day basis that creates awareness.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 mb-4">
+                <div class="card">
+                    <div class="feature-img"><img src="assets/img/feature-04.svg" alt="Feature"></div>
+                    <div class="card-body">
+                        <h4 class="card-title">Help others</h4>
+                        <p class="card-text">When another user is in danger, all of the close-by users will get an alert, so you can go help them.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-center">
+                <p>Temis is built as an open source project.
+                    <!-- You can collaborate as you wish forking our
+                    <a href="https://github.com/scvsoft/temis" taget="_blank">Github project</a>. --></p>
+            </div>
+        </div>
+    </div>
+    <!-- Features ends -->
+
+
+    <!-- Contact begins -->
+    <div class="container py-5" id="section-contactus">
+        <div class="row">
+
+            <div class="col-md-6 pr-3">
+                <h2>Contact Us</h2>
+                <p>We are developing Temis with 💜 at <a href="http://scvsoft.com/" target="_blank">SCVSoft</a> as an open source project.</p>
+                <p>You can contact us at <a href="mailto:here@temis.care">here@temis.care</a></p>
+            </div>
+            <div class="col-md-3">
+                <h2>Meet the team</h2>
+                <ul class="list-unstyled team">
+                    <li class="media">
+                        <img class="mr-3" src="assets/img/team/team-01.jpg" alt="Team member">
+                        <div class="media-body">
+                            <strong class="mt-0 mb-1">Juan Pablo Saraceno</strong>
+                            <p class="small">The Frontender 🎼</p>
+                            <p>
+                                <a href="https://twitter.com/jpsaraceno" target="_blank" class="socicon socicon-twitter"></a>
+                                <a href="https://github.com/holden-caulfield" target="_blank" class="socicon socicon-github"></a>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="media">
+                        <img class="mr-3" src="assets/img/team/team-02.jpg" alt="Team member">
+                        <div class="media-body">
+                            <strong class="mt-0 mb-1">Rodrigo Uroz</strong>
+                            <p class="small">The Software Neurosurgeon 🧠</p>
+                            <p>
+                                <a href="https://twitter.com/rodrigouroz" target="_blank" class="socicon socicon-twitter"></a>
+                                <a href="https://github.com/rodrigouroz" target="_blank" class="socicon socicon-github"></a>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="media">
+                        <img class="mr-3" src="assets/img/team/team-03.jpg" alt="Team member">
+                        <div class="media-body">
+                            <strong class="mt-0 mb-1">Ezequiel González Rial</strong>
+                            <p class="small">The fixer 💪</p>
+                            <p>
+                                <a href="https://twitter.com/gonrial" target="_blank" class="socicon socicon-twitter"></a>
+                                <a href="https://github.com/gonrial" target="_blank" class="socicon socicon-github"></a>
+                            </p>
+                        </div>
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h2 class="d-none d-sm-block">&nbsp;</h2>
+                <ul class="list-unstyled team">
+
+                    <li class="media">
+                        <img class="mr-3" src="assets/img/team/team-04.jpg" alt="Team member">
+                        <div class="media-body">
+                            <strong class="mt-0 mb-1">Brenda Dillon</strong>
+                            <p class="small">Information Junkie 🦄</p>
+                            <p>
+                                <a href="https://twitter.com/rarcita" target="_blank" class="socicon socicon-twitter"></a>
+                                <a href="https://github.com/rarcita" target="_blank" class="socicon socicon-github"></a>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="media">
+                        <img class="mr-3" src="assets/img/team/team-05.jpg" alt="Team member">
+                        <div class="media-body">
+                            <strong class="mt-0 mb-1">Agustín Ruiz</strong>
+                            <p class="small">The designer 🦖</p>
+                            <p>
+                                <a href="https://twitter.com/aguscruiz" target="_blank" class="socicon socicon-twitter"></a>
+                                <a href="https://github.com/aguscruiz" target="_blank" class="socicon socicon-github"></a>
+                            </p>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Contact ends -->
+
+    <!-- Footer begins -->
+    <nav class="footer navbar navbar-expand-lg navbar-dark bg-dark small">
+        <div class="container">
+            <a class="navbar-brand" href="#section-home">
+                <img src="assets/img/logo.svg" width="100" class="d-inline-block align-top" alt="Temis">
+            </a>
+
+            <span class="navbar-text">
+                       <!-- <a href="#" data-toggle="modal" data-target="#termsModal">Terms and conditions</a> · <a href="#" data-toggle="modal" data-target="#privacyModal">Privacy</a> ·  -->Contact us: <a href="mailto:here@temis.care">here@temis.care</a>
+                      </span>
+
+        </div>
+    </nav>
+    <!-- Footer ends -->
+
+    <!-- Modal terms -->
+    <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModal">Terms and conditions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal terms ends -->
+    <!-- Modal Privacy -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" role="dialog" aria-labelledby="privacyLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModal">Privacy</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Privacy ends -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
 
 </body>
