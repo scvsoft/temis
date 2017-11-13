@@ -22,7 +22,7 @@ chai.use(chaiHttp)
 
 describe('Server', () => {
   describe('JWT Authentication', () => {
-    it('returns a valid response if JWT token is present and valid', done => {
+    test('returns a valid response if JWT token is present and valid', done => {
       const token = createToken({ id: 1001 }, config)
 
       chai
@@ -35,7 +35,7 @@ describe('Server', () => {
         })
     })
 
-    it('returns an authentication response error if JWT token is not present', done => {
+    test('returns an authentication response error if JWT token is not present', done => {
       chai
         .request(server)
         .get('/reports')
@@ -45,7 +45,7 @@ describe('Server', () => {
         })
     })
 
-    it('returns an authentication response error if JWT token is expired', done => {
+    test('returns an authentication response error if JWT token is expired', done => {
       const token = createToken(
         { id: 1001 },
         {
@@ -70,7 +70,7 @@ describe('Server', () => {
   describe('Facebook Authentication', () => {
     // it('should return 401 status when not authenticated');
 
-    before(() => {
+    beforeAll(() => {
       nock('https://graph.facebook.com:443', { encodedQueryParams: true })
         .get(/\/me$/)
         .query(queryObj => queryObj.access_token === 'valid_token')
@@ -95,7 +95,7 @@ describe('Server', () => {
         })
     })
 
-    it('should return a JWT token when facebook token is valid', done => {
+    test('should return a JWT token when facebook token is valid', done => {
       chai
         .request(server)
         .post('/auth/facebook')
@@ -107,7 +107,7 @@ describe('Server', () => {
         })
     })
 
-    it('should return an error when token is invalid', done => {
+    test('should return an error when token is invalid', done => {
       chai
         .request(server)
         .post('/auth/facebook')
@@ -119,5 +119,5 @@ describe('Server', () => {
     })
   })
 
-  after(done => server.close(done))
+  afterAll(done => server.close(done))
 })
