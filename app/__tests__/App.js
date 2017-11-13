@@ -9,6 +9,10 @@ jest.mock('react-native-i18n', () => ({
   t: jest.fn(translation => translation)
 }))
 
+jest.mock('react-native-i18n', () => ({
+  t: jest.fn(translation => translation)
+}))
+
 it('renders correctly', () => {
   const tree = renderer.create(<App />)
 })

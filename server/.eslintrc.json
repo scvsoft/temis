@@ -1,6 +1,3 @@
 {
-  "extends": [
-    "prettier",
-  	"airbnb-base"
-  ]
+  "extends": "react-app"
 }
