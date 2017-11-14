@@ -4,18 +4,12 @@ import chaiHttp from 'chai-http'
 import http from 'http'
 import { createApp, createToken } from '../src/app'
 
-const config = {
-  facebook: {
-    clientID: '128732717834556',
-    clientSecret: 'XXX'
-  },
-  jwt: {
-    secret: 'f444WXmFIVxxbo3MvQndRGZ5',
-    expiration: 60 * 120 // in seconds
-  }
-}
+process.env.FACEBOOK_CLIENTID = '128732717834556'
+process.env.FACEBOOK_CLIENTSECRET = 'XXX'
+process.env.JWT_SECRET = 'f444WXmFIVxxbo3MvQndRGZ5'
+process.env.JWT_EXPIRATION = 60 * 120 // in seconds
 
-const app = createApp(config)
+const app = createApp()
 const server = http.createServer(app)
 // nock.recorder.rec();
 chai.use(chaiHttp)
@@ -23,7 +17,7 @@ chai.use(chaiHttp)
 describe('Server', () => {
   describe('JWT Authentication', () => {
     test('returns a valid response if JWT token is present and valid', done => {
-      const token = createToken({ id: 1001 }, config)
+      const token = createToken({ id: 1001 })
 
       chai
         .request(server)
@@ -46,15 +40,8 @@ describe('Server', () => {
     })
 
     test('returns an authentication response error if JWT token is expired', done => {
-      const token = createToken(
-        { id: 1001 },
-        {
-          jwt: {
-            secret: 'f444WXmFIVxxbo3MvQndRGZ5',
-            expiration: 0 // in seconds
-          }
-        }
-      )
+      process.env.JWT_EXPIRATION = 0 // in seconds
+      const token = createToken({ id: 1001 })
 
       chai
         .request(server)
