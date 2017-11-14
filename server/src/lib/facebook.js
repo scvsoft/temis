@@ -7,16 +7,16 @@ export default () => {
     new FacebookTokenStrategy(
       {
         clientID: process.env.FACEBOOK_CLIENTID,
-        clientSecret: process.env.FACEBOOK_CLIENTSECRET
+        clientSecret: process.env.FACEBOOK_CLIENTSECRET,
+        profileFields: ['id', 'displayName', 'gender', 'email', 'birthday']
       },
       (accessToken, refreshToken, profile, done) => {
         // save user in memory
         const user = {
-          fullName: profile.displayName,
-          email: profile.emails[0].value,
-          id: profile.id,
+          fullName: profile._json.name,
+          email: profile._json.email,
           facebookProvider: {
-            id: profile.id,
+            id: profile._json.id,
             token: accessToken
           }
         }
