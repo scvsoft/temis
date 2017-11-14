@@ -55,7 +55,7 @@ GET http://localhost:3000/auth/me
 [snyk-url]: https://snyk.io/test/github/scvsoft/temis?targetFile=server%2Fpackage.json
 [snyk-image]: https://snyk.io/test/github/scvsoft/temis/badge.svg?targetFile=server%2Fpackage.json
 
-[depstat-url]: https://david-dm.org/scvsoft/temis
+[depstat-url]: https://david-dm.org/scvsoft/temis?path=server
 [depstat-image]: https://david-dm.org/scvsoft/temis.svg?path=server
 
 [devdepstat-url]: https://david-dm.org/scvsoft/temis?path=server&type=dev
