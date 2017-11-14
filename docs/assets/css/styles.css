@@ -120,6 +120,7 @@ a:active {
     -webkit-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.1), 0 0 40px rgba(0, 0, 0, 0.1) inset;
     -moz-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.1), 0 0 40px rgba(0, 0, 0, 0.1) inset;
     box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.1), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    transition: all 0.2s ease-in-out;
 }
 
 .card-body {
@@ -163,6 +164,10 @@ ul.team {
 
 .section-features .card:hover h4 {
     color: #6200EA;
+}
+
+.section-features .card .feature-img img {
+    transition: all 0.3s ease-in-out;
 }
 
 .section-features .card:hover .feature-img img {
