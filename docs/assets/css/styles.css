@@ -1,21 +1,33 @@
-@import url('https://fonts.googleapis.com/css?family=Prompt:400,800');
+@import url('https://fonts.googleapis.com/css?family=Prompt:400,700');
+@import url('https://d1azc1qln24ryf.cloudfront.net/114779/Socicon/style-cf.css?rd5re8');
 body,
 html {
+    background-color: #fff;
+    color: #455A64;
     font-family: -apple-system, '.SFNSText-Regular', 'San Francisco', 'Roboto', 'Segoe UI', 'Helvetica Neue', 'Lucida Grande', sans-serif;
-    background-color: #6200EA;
-    background-image: url(../img/bg.png);
-    background-repeat: repeat;
-    background-size: 300px;
+}
+
+::selection {
+    background: #6200EA;
     color: #fff;
-    font-size: 10px;
+}
+
+ ::-moz-selection {
+    background: #6200EA;
+    color: #fff;
 }
 
 h1,
 h2,
-h3,
+h3 {
+    color: #6200EA;
+    font-family: 'Prompt', -apple-system, '.SFNSText-Regular', 'San Francisco', 'Roboto', 'Segoe UI', 'Helvetica Neue', 'Lucida Grande', sans-serif;
+    font-weight: 700;
+}
+
 h4 {
     font-family: 'Prompt', -apple-system, '.SFNSText-Regular', 'San Francisco', 'Roboto', 'Segoe UI', 'Helvetica Neue', 'Lucida Grande', sans-serif;
-    font-weight: 800;
+    font-weight: 400;
 }
 
 img {
@@ -23,35 +35,155 @@ img {
 }
 
 a {
-    color: #00E5FF;
+    color: #6200EA;
     text-decoration: none;
+    transition: all 0.2s ease-in-out;
 }
 
 a:hover,
 a:focus,
 a:active {
+    color: inherit;
     text-decoration: underline;
 }
 
-.container {
-    margin: 0 auto;
-    max-width: 1100px;
-    padding: 2rem;
+.header {
+    background-color: #6200EA;
+    background-image: url(../img/bg.png);
+    background-repeat: repeat;
+    background-size: 300px;
+    color: #fff;
 }
 
-.logo {
-    width: 40rem;
-    max-width: 80%;
+.header a,
+.footer a {
+    color: #00E5FF;
+}
+
+.navbar.bg-dark {
+    background-color: transparent !important;
+}
+
+.home-padding {
+    padding: 75px 20px;
+}
+
+.header h2 {
+    color: #00E5FF;
+}
+
+.header h3 {
+    color: #fff;
+}
+
+.downloadlinks a {
+    display: inline-block;
+    margin: 0 10px 10px 0;
+}
+
+.downloadlinks a img {
+    height: 45px;
+}
+
+.footer.bg-dark {
+    background-color: #6200EA !important;
+}
+
+.btn-primary {
+    background-color: #6200EA;
+    border-color: #6200EA;
+    color: #00E5FF;
+}
+
+.btn-primary:hover {
+    background-color: #6200EA;
+    border-color: #6200EA;
+    color: #fff;
+}
+
+.feature-img {
+    background-color: #6200EA;
+    background-image: url(../img/bg.png);
+    background-repeat: repeat;
+    background-size: 300px;
+    border-radius: 3px 3px 0 0;
     text-align: center;
-    margin: 30% auto 0;
-}
-
-.footer {
+    padding: 40px 20px;
     width: 100%;
-    padding: 2rem 1rem;
-    text-align: center;
-    font-size: 1.6rem;
-    bottom: 0;
-    left: 0;
-    position: absolute;
+}
+
+.feature-img img {
+    height: 50px;
+}
+
+.card {
+    -webkit-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.1), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.1), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.1), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    transition: all 0.2s ease-in-out;
+}
+
+.card-body {
+    background-color: #fff;
+}
+
+.team .media img {
+    width: 60px;
+    border-radius: 1000px;
+}
+
+.team .small {
+    margin-bottom: 5px;
+}
+
+a.socicon {
+    color: #BECACF;
+    font-size: 20px;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+a.socicon:hover {
+    color: #6200EA;
+}
+
+ul.team {
+    margin-bottom: 0;
+}
+
+.section-features .card {
+    transform: scale(1);
+}
+
+.section-features .card:hover {
+    -webkit-box-shadow: 0 15px 10px -10px rgba(98, 0, 234, 0.2), 0 1px 4px rgba(98, 0, 234, 0.1), 0 0 40px rgba(98, 0, 234, 0.1) inset;
+    -moz-box-shadow: 0 15px 10px -10px rgba(98, 0, 234, 0.2), 0 1px 4px rgba(98, 0, 234, 0.1), 0 0 40px rgba(98, 0, 234, 0.1) inset;
+    box-shadow: 0 15px 10px -10px rgba(98, 0, 234, 0.2), 0 1px 4px rgba(98, 0, 234, 0.1), 0 0 40px rgba(98, 0, 234, 0.1) inset;
+    transform: scale(1.05, 1.05);
+}
+
+.section-features .card:hover h4 {
+    color: #6200EA;
+}
+
+.section-features .card .feature-img img {
+    transition: all 0.3s ease-in-out;
+}
+
+.section-features .card:hover .feature-img img {
+    transform: scale(1.3);
+}
+
+@media (max-width: 576px) {
+    .navbar-brand img {
+        width: 200px;
+    }
+    .downloadlinks {
+        text-align: center;
+    }
+    .downloadlinks a {
+        display: inline-block;
+        margin: 0 5px;
+        width: calc(50% - 12px);
+    }
 }
