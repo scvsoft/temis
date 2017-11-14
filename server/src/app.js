@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
 import expressJwt from 'express-jwt'
 import passport from 'passport'
+import helmet from 'helmet'
 import passportConfig from './lib/facebook'
 import Users from './models/user'
 
@@ -19,6 +20,8 @@ export const createToken = auth =>
 
 export const createApp = () => {
   const app = express()
+
+  app.use(helmet())
 
   app.use(bodyParser.json())
 

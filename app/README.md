@@ -20,7 +20,7 @@
 [snyk-url]: https://snyk.io/test/github/scvsoft/temis?targetFile=app%2Fpackage.json
 [snyk-image]: https://snyk.io/test/github/scvsoft/temis/badge.svg?targetFile=app%2Fpackage.json
 
-[depstat-url]: https://david-dm.org/scvsoft/temis
+[depstat-url]: https://david-dm.org/scvsoft/temis?path=app
 [depstat-image]: https://david-dm.org/scvsoft/temis.svg?path=app
 
 [devdepstat-url]: https://david-dm.org/scvsoft/temis?path=app&type=dev
