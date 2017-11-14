@@ -6,7 +6,7 @@ import passport from 'passport'
 import passportConfig from './lib/facebook'
 import Users from './models/user'
 
-export const createToken = (auth, config) =>
+export const createToken = auth =>
   jwt.sign(
     {
       id: auth.id
@@ -17,7 +17,7 @@ export const createToken = (auth, config) =>
     }
   )
 
-export const createApp = config => {
+export const createApp = () => {
   const app = express()
 
   app.use(bodyParser.json())
@@ -25,7 +25,7 @@ export const createApp = config => {
   // authentication setup
 
   // setup configuration for facebook login
-  passportConfig(config)
+  passportConfig()
 
   const sendToken = (req, res) => {
     res.setHeader('x-auth-token', req.token)
@@ -33,7 +33,7 @@ export const createApp = config => {
   }
 
   const generateToken = (req, res, next) => {
-    req.token = createToken(req.auth, config)
+    req.token = createToken(req.auth)
     next()
   }
 

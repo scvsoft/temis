@@ -2,7 +2,7 @@ import passport from 'passport'
 import FacebookTokenStrategy from 'passport-facebook-token'
 import Users from '../models/user'
 
-export default config => {
+export default () => {
   passport.use(
     new FacebookTokenStrategy(
       {
