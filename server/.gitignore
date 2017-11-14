@@ -1,5 +1,2 @@
 # Build folder
 dist/
-
-# Config file
-src/config.js

@@ -1,6 +1,5 @@
 import passport from 'passport'
 import FacebookTokenStrategy from 'passport-facebook-token'
-import Users from '../models/user'
 
 export default () => {
   passport.use(
@@ -13,14 +12,15 @@ export default () => {
       (accessToken, refreshToken, profile, done) => {
         // save user in memory
         const user = {
-          fullName: profile._json.name,
+          name: profile._json.name,
           email: profile._json.email,
+          gender: profile._json.gender,
+          birthday: profile._json.birthday,
           facebookProvider: {
             id: profile._json.id,
             token: accessToken
           }
         }
-        Users.put(profile.id, user)
         done(null, user)
       }
     )
