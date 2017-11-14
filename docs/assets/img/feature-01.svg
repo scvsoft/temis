@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="19px" viewBox="0 0 22 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/navbar/01/off</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Exportables" transform="translate(-55.000000, -22.000000)">
+            <g id="icon/navbar/01/on" transform="translate(54.000000, 20.000000)">
+                <g id="ic_record_voice_over">
+                    <polygon id="Bounds" points="0 0 24 0 24 24 0 24"></polygon>
+                    <path d="M9,15 C6.33,15 1,16.34 1,19 L1,21 L17,21 L17,19 C17,16.34 11.67,15 9,15 L9,15 Z M16.76,5.36 L15.08,7.05 C15.92,8.23 15.92,9.76 15.08,10.94 L16.76,12.63 C18.78,10.61 18.78,7.56 16.76,5.36 L16.76,5.36 Z M20.07,2 C23.98,6.05 23.97,12.11 20.07,16 L18.44,14.37 C21.21,11.19 21.21,6.65 18.44,3.63 L20.07,2 Z M9,13 C6.790861,13 5,11.209139 5,9 C5,6.790861 6.790861,5 9,5 C11.209139,5 13,6.790861 13,9 C13,11.209139 11.209139,13 9,13 Z" id="Icon" fill="#00E5FF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
