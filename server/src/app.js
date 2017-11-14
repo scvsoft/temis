@@ -6,18 +6,18 @@ import passport from 'passport'
 import passportConfig from './lib/facebook'
 import Users from './models/user'
 
-export const createToken = (auth, config) =>
+export const createToken = auth =>
   jwt.sign(
     {
       id: auth.id
     },
-    config.jwt.secret,
+    process.env.JWT_SECRET,
     {
-      expiresIn: config.jwt.expiration
+      expiresIn: process.env.JWT_EXPIRATION
     }
   )
 
-export const createApp = config => {
+export const createApp = () => {
   const app = express()
 
   app.use(bodyParser.json())
@@ -25,7 +25,7 @@ export const createApp = config => {
   // authentication setup
 
   // setup configuration for facebook login
-  passportConfig(config)
+  passportConfig()
 
   const sendToken = (req, res) => {
     res.setHeader('x-auth-token', req.token)
@@ -33,7 +33,7 @@ export const createApp = config => {
   }
 
   const generateToken = (req, res, next) => {
-    req.token = createToken(req.auth, config)
+    req.token = createToken(req.auth)
     next()
   }
 
@@ -57,7 +57,7 @@ export const createApp = config => {
 
   // token handling middleware
   const authenticate = expressJwt({
-    secret: config.jwt.secret,
+    secret: process.env.JWT_SECRET,
     requestProperty: 'auth',
     getToken: req => {
       if (req.headers['x-auth-token']) {

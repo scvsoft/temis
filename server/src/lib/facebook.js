@@ -2,12 +2,12 @@ import passport from 'passport'
 import FacebookTokenStrategy from 'passport-facebook-token'
 import Users from '../models/user'
 
-export default config => {
+export default () => {
   passport.use(
     new FacebookTokenStrategy(
       {
-        clientID: config.facebook.clientID,
-        clientSecret: config.facebook.clientSecret
+        clientID: process.env.FACEBOOK_CLIENTID,
+        clientSecret: process.env.FACEBOOK_CLIENTSECRET
       },
       (accessToken, refreshToken, profile, done) => {
         // save user in memory
