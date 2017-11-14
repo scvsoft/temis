@@ -14,9 +14,9 @@
     "test-ci": "npm run lint && npm run test -- --coverage && cat ./coverage/lcov.info | coveralls",
     "build": "babel src -d dist",
     "serve": "node dist/main.js",
-    "lint": "npm run lint:js -- --write **/*.{js,jsx}",
+    "lint": "npm run lint:js -- --write **/*.js && npm run lint:json -- **/*.json",
     "lint:js": "prettier --config ../.prettierrc",
-    "lint:json": "jsonlint"
+    "lint:json": "jsonlint-cli"
   },
   "repository": {
     "type": "git",
@@ -48,6 +48,7 @@
     "husky": "^0.14.3",
     "jest": "^21.2.1",
     "jsonlint": "^1.6.2",
+    "jsonlint-cli": "^1.0.1",
     "lint-staged": "^4.3.0",
     "nock": "^9.0.28",
     "nodemon": "^1.12.1",
