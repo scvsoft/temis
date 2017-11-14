@@ -40,7 +40,6 @@ describe('Server', () => {
     })
 
     test('returns an authentication response error if JWT token is expired', done => {
-      process.env.JWT_SECRET = 'f444WXmFIVxxbo3MvQndRGZ5'
       process.env.JWT_EXPIRATION = 0 // in seconds
       const token = createToken({ id: 1001 })
 
