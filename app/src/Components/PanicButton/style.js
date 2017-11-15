@@ -1,19 +1,18 @@
 import { StyleSheet } from 'react-native'
-import { colors, fonts } from 'app/Theme'
+import { colors, fonts, metrics } from 'app/Theme'
 
 export default StyleSheet.create({
   button: {
     backgroundColor: colors.danger,
+    alignSelf: 'center',
     width: 250,
     height: 250,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+    padding: metrics.padding,
     borderRadius: 150
   },
   text: {
     ...fonts.h1,
-    textAlign: 'center',
+    width: '100%',
     color: colors.title
   }
 })
