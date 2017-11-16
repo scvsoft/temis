@@ -5,7 +5,9 @@ import { images, colors } from 'app/Theme'
 const navStyle = {
   navBarBackgroundColor: colors.main,
   navBarTextColor: colors.title,
-  statusBarTextColorScheme: 'light'
+  statusBarTextColorScheme: 'light',
+  navigationBarColor: colors.mainDarker,
+  statusBarColor: colors.mainDarker
 }
 
 const tabNames = ['help', 'reports', 'insights', 'alerts', 'settings']
