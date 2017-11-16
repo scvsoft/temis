@@ -3,6 +3,9 @@ export default {
     text: 'I NEED HELP!'
   },
   screens: {
+    signIn: {
+      button: 'Login with Facebook'
+    },
     help: {
       title: 'Help!',
       instructions:
