@@ -2,6 +2,14 @@ import { Navigation } from 'react-native-navigation'
 import I18n from 'app/Locales'
 import { images, colors } from 'app/Theme'
 
+const navStyle = {
+  navBarBackgroundColor: colors.main,
+  navBarTextColor: colors.title,
+  statusBarTextColorScheme: 'light',
+  navigationBarColor: colors.mainDarker,
+  statusBarColor: colors.mainDarker
+}
+
 const tabNames = ['help', 'reports', 'insights', 'alerts', 'settings']
 
 const tabsStyle = {
@@ -22,7 +30,10 @@ export const goHome = () => {
   Navigation.startTabBasedApp({
     tabs,
     tabsStyle,
-    appStyle: tabsStyle
+    appStyle: {
+      ...tabsStyle,
+      ...navStyle
+    }
   })
 }
 
