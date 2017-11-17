@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "precommit": "lint-staged",
-    "prepush": "lint-staged && npm test",
+    "prepush": "lint-staged && npm test --prefix ../app && npm test --prefix ../server",
     "prestart": "npm run lint",
     "start": "babel-node src/main.js",
     "dev": "nodemon --exec npm start",
