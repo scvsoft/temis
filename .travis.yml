@@ -24,8 +24,8 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - npm --prefix app test-ci
-  - npm --prefix server test-ci
+  - npm run test-ci --prefix app
+  - npm run test-ci --prefix server
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT -t lcov -p ./server/coverage --debug
