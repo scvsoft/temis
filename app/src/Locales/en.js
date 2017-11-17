@@ -9,11 +9,14 @@ export default {
     help: {
       title: 'Help!',
       instructions:
-        'Press this button and we will send an alert to your ' +
-        'contacts with a real time tracking of your location and ' +
-        'post the alert on your profiles in social media. You may end ' +
-        'the alert at any time and then fill a report to tell us what ' +
-        'happened to you.'
+        'When you press this button, we’ll send an ' +
+        'alert to all of your contacts, sharing your ' +
+        'live location and post it on your social networks. ' +
+        'You’ll be able to stop this alert at any time by ' +
+        'entering your pin.',
+      reportNote:
+        'If you want to tell us about something you’ve already experienced:',
+      reportButton: 'REPORT YOUR EXPERIENCE'
     },
     reports: {
       title: 'Reports'
