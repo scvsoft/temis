@@ -12,11 +12,15 @@ export default StyleSheet.create({
     width: '100%',
     height: '100%'
   },
-  buttonDesc: {
+  textContainer: {
+    justifyContent: 'space-between',
+    flexGrow: 1
+  },
+  descText: {
     ...fonts.text,
     backgroundColor: 'transparent',
     color: colors.text,
     textAlign: 'center',
-    padding: metrics.padding
+    paddingHorizontal: metrics.padding
   }
 })

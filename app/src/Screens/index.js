@@ -5,10 +5,13 @@ import Help from './Help'
 import ComingSoon from './ComingSoon'
 
 export default (store, Provider) => {
-  Navigation.registerComponent('temis.signIn', () => SignIn)
-  Navigation.registerComponent('temis.help', () => Help)
-  Navigation.registerComponent('temis.reports', () => SignIn)
-  Navigation.registerComponent('temis.insights', () => ComingSoon)
-  Navigation.registerComponent('temis.alerts', () => ComingSoon)
-  Navigation.registerComponent('temis.settings', () => ComingSoon)
+  const registerScreen = (name, component = ComingSoon) => {
+    Navigation.registerComponent(name, () => component, store, Provider)
+  }
+  registerScreen('temis.signIn', SignIn)
+  registerScreen('temis.help', Help)
+  registerScreen('temis.reports')
+  registerScreen('temis.insights')
+  registerScreen('temis.alerts')
+  registerScreen('temis.settings')
 }
