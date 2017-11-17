@@ -40,9 +40,6 @@ describe('Server', () => {
 
     Users.clear()
 
-    process.env.FACEBOOK_CLIENTID = '128732717834556'
-    process.env.FACEBOOK_CLIENTSECRET = 'XXX'
-    process.env.JWT_SECRET = 'f444WXmFIVxxbo3MvQndRGZ5'
     process.env.JWT_EXPIRATION = '2h'
   })
 
