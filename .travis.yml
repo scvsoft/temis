@@ -28,6 +28,7 @@ script:
   - npm run test-ci --prefix server
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT -p ./server/coverage --debug
+  - cp server/coverage coverage -r 
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --debug
   - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 
