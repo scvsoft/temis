@@ -11,7 +11,7 @@
     "dev": "nodemon --exec npm start",
     "test": "jest",
     "test:watch": "npm run test -- --watch",
-    "test-ci": "npm run lint && npm run test -- --coverage && cat ./coverage/lcov.info | coveralls",
+    "test-ci": "npm run lint && npm run test -- --coverage && cat ./coverage/lcov.info | coveralls && codecov",
     "build": "babel src -d dist",
     "serve": "node dist/main.js",
     "lint": "npm run lint:js -- --write **/*.js && npm run lint:json -- **/*.json",
