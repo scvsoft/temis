@@ -1,5 +1,6 @@
 const SETTINGS = {
-  useReactotron: __DEV__
+  useReactotron: __DEV__,
+  resetStoresOnStartup: true
 }
 
 export default SETTINGS
