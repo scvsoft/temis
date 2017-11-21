@@ -138,6 +138,28 @@ describe('Server', () => {
           done()
         })
     })
+
+    test('returns an error if user doesnt match token (💣)', done => {
+      const token = createToken({ id: 106458953461566 })
+
+      Users.put(106458953461566, {
+        id: '106458953461566',
+        name: 'Name',
+        email: 'Email',
+        gender: 'Gender',
+        birthday: 'Birthday',
+        facebookProvider: {}
+      })
+
+      chai
+        .request(server)
+        .get('/users/1')
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res).to.have.status(401)
+          done()
+        })
+    })
   })
 
   describe('Put User profile', () => {
@@ -184,6 +206,30 @@ describe('Server', () => {
       chai
         .request(server)
         .get('/users/106458953461566')
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res).to.have.status(401)
+          done()
+        })
+    })
+
+    test('returns an error if user doesnt match token', done => {
+      const token = createToken({ id: 106458953461566 })
+      const user = {
+        id: '106458953461566',
+        name: 'Name',
+        email: 'Email',
+        gender: 'Gender',
+        birthday: 'Birthday',
+        facebookProvider: {}
+      }
+
+      Users.put(106458953461566, user)
+
+      chai
+        .request(server)
+        .put('/users/1')
+        .send({ ...user, id: 1, name: 'Fake name' })
         .set('x-auth-token', token)
         .end((err, res) => {
           expect(res).to.have.status(401)

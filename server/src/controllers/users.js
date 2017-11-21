@@ -2,7 +2,7 @@ import Users from '../models/user'
 
 export const getUser = (req, res) => {
   if (req.params.userId !== req.user.id) {
-    res.status(401)
+    res.status(401).json('The user is not authorized to access this resource')
   } else {
     res.status(200).json(req.user)
   }
@@ -10,7 +10,7 @@ export const getUser = (req, res) => {
 
 export const putUser = (req, res) => {
   if (req.params.userId !== req.user.id) {
-    res.status(401)
+    res.status(401).json('The user is not authorized to access this resource')
   } else {
     const user = {
       id: req.user.id,
