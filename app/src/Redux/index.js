@@ -1,7 +1,8 @@
 import Config from 'app/Config/DebugSettings'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import { persistStore, persistCombineReducers } from 'redux-persist'
 import storage from 'redux-persist/es/storage'
+import reduxReset from 'redux-reset'
 import { reducer as report } from './Report'
 
 const config = {
@@ -20,7 +21,10 @@ const actualCreateStore = Config.useReactotron
   : createStore
 
 export default () => {
-  const store = actualCreateStore(rootReducer, applyMiddleware(...middleware))
+  const store = actualCreateStore(
+    rootReducer,
+    compose(applyMiddleware(...middleware), reduxReset())
+  )
   const persistor = persistStore(store)
   return { store, persistor }
 }
