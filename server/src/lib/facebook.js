@@ -1,26 +1,26 @@
 import passport from 'passport'
 import FacebookTokenStrategy from 'passport-facebook-token'
-import Users from '../models/user'
 
 export default () => {
   passport.use(
     new FacebookTokenStrategy(
       {
         clientID: process.env.FACEBOOK_CLIENTID,
-        clientSecret: process.env.FACEBOOK_CLIENTSECRET
+        clientSecret: process.env.FACEBOOK_CLIENTSECRET,
+        profileFields: ['id', 'displayName', 'gender', 'email', 'birthday']
       },
       (accessToken, refreshToken, profile, done) => {
         // save user in memory
         const user = {
-          fullName: profile.displayName,
-          email: profile.emails[0].value,
-          id: profile.id,
+          name: profile._json.name,
+          email: profile._json.email,
+          gender: profile._json.gender,
+          birthday: profile._json.birthday,
           facebookProvider: {
-            id: profile.id,
+            id: profile._json.id,
             token: accessToken
           }
         }
-        Users.put(profile.id, user)
         done(null, user)
       }
     )
