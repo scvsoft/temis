@@ -24,8 +24,11 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - npm --prefix app test
-  - npm --prefix server test
+  - npm run test-ci --prefix app
+  - npm run test-ci --prefix server
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - cp server/coverage coverage -r 
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT --debug
+  - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+
