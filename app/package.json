@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "precommit": "lint-staged",
-    "prepush": "lint-staged && npm test",
+    "prepush": "lint-staged && npm test --prefix ../app && npm test --prefix ../server",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "test-ci": "npm run lint && npm run test --coverage && cat ./coverage/lcov.info | coveralls",
+    "test-ci": "npm run lint && npm run test",
     "lint": "npm run lint:js -- **/*.{js,jsx}",
     "lint:js": "prettier --config ../.prettierrc --write",
     "lint:json": "jsonlint"
@@ -25,6 +25,7 @@
   "devDependencies": {
     "babel-jest": "21.2.0",
     "babel-preset-react-native": "4.0.0",
+    "codecov": "^3.0.0",
     "coveralls": "^3.0.0",
     "husky": "^0.14.3",
     "jest": "21.2.1",

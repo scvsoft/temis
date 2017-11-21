@@ -1,5 +1,5 @@
 ---
-engines:
+plugins:
   checkstyle:
     enabled: true
   eslint:
@@ -18,11 +18,7 @@ engines:
     config:
       languages:
       - javascript
-ratings:
-  paths:
-  - app/**
-  - server/src/**
-exclude_paths:
+exclude_patterns:
 - __tests__/
 - tests/
 - node_modules/
