@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "precommit": "lint-staged",
-    "prepush": "lint-staged && npm test --prefix ../app && npm test --prefix ../server",
+    "prepush":
+      "lint-staged && npm test --prefix ../app && npm test --prefix ../server",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "test-ci": "npm run lint && npm run test",
@@ -19,6 +20,7 @@
     "react-native-i18n": "^2.0.9",
     "react-native-navigation": "^1.1.262",
     "react-redux": "^5.0.6",
+    "redux-persist": "^5.4.0",
     "redux": "^3.7.2",
     "reduxsauce": "^0.7.0"
   },
@@ -42,14 +44,8 @@
   "lint-staged": {
     "gitDir": "../",
     "linters": {
-      "*.{js,jsx}": [
-        "npm run lint:js -- --write",
-        "git add"
-      ],
-      "*.json": [
-        "npm run lint:json",
-        "git add"
-      ]
+      "*.{js,jsx}": ["npm run lint:js -- --write", "git add"],
+      "*.json": ["npm run lint:json", "git add"]
     }
   }
 }
