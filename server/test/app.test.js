@@ -4,7 +4,7 @@ import chaiHttp from 'chai-http'
 import http from 'http'
 import dotenv from 'dotenv'
 import createApp from '../src/app'
-import { createToken } from '../src/lib/authentication'
+import { createToken } from '../src/controllers/authentication'
 import Users from '../src/models/user'
 
 dotenv.config()

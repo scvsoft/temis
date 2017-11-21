@@ -13,7 +13,9 @@ export default {
         'tus contactos con tu ubicación en vivo y lo postearemos ' +
         'en tus redes sociales. Podrás terminar la alerta en ' +
         'cualquier momento y luego completar un reporte contándonos ' +
-        'que es lo que te sucedió.'
+        'que es lo que te sucedió.',
+      reportNote: 'Si querés contarnos algo que ya te sucedió…',
+      reportButton: 'PUBLICÁ QUE EXPERIENCIA VIVISTE'
     },
     reports: {
       title: 'Reportes'
