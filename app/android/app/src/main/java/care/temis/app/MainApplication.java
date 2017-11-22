@@ -1,6 +1,4 @@
-package com.temis;
-
-import android.app.Application;
+package care.temis.app;
 
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.facebook.react.ReactPackage;

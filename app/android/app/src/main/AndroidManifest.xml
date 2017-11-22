@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.temis"
+    package="care.temis.app"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -26,6 +26,9 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="45178e641f4bbd9b777cedd7484c5dd9879362ad" />
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
     </application>
 
