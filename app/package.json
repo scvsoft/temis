@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "precommit": "lint-staged",
-    "prepush": "lint-staged && npm test --prefix ../app && npm test --prefix ../server",
+    "prepush": "lint-staged && npm test",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "test-ci": "npm run lint && npm run test",
@@ -16,6 +16,7 @@
     "ramda": "^0.25.0",
     "react": "16.0.0",
     "react-native": "0.50.1",
+    "react-native-facebook-login": "^1.6.0",
     "react-native-i18n": "^2.0.9",
     "react-native-navigation": "^1.1.262",
     "react-redux": "^5.0.6",
