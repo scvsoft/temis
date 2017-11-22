@@ -2,8 +2,8 @@ package care.temis.app;
 
 import android.os.Bundle;
 
-import com.reactnativenavigation.controllers.SplashActivity;
 import com.crashlytics.android.Crashlytics;
+import com.reactnativenavigation.controllers.SplashActivity;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends SplashActivity {
