@@ -58,3 +58,5 @@ typings/
 .env
 
 app/android/fastlane/keys
+
+app/ios/fastlane/keys
