@@ -27,7 +27,7 @@ lane :beta do
   
   ensure_git_status_clean
   increment_version_code
-  commit_android_version_bump
+  git_commit(path: "./app/build.gradle", message: "Bump Android Version")
   push_to_git_remote
 
   # build the release variant
