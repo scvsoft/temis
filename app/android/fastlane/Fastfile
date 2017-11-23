@@ -10,14 +10,25 @@ generated_fastfile_id "9a6ef954-a397-48be-b442-19b2ea2745a5"
 
 default_platform :android
 
+def load_keys
+  begin
+    import("keys")
+  rescue => exception
+    UI.error("fastlane/keys file not found. To use this Fastfile, copy fastlane/keys.template into fastlane/keys and fill in the values")
+    raise exception
+  end
+end
+
 # Fastfile actions accept additional configuration, but
 # don't worry, fastlane will prompt you for required
 # info which you can add here later
 lane :beta do
-#  ensure_git_status_clean
-#  increment_version_code
-#  commit_android_version_bump
-#  push_to_git_remote
+  load_keys
+  
+  ensure_git_status_clean
+  increment_version_code
+  commit_android_version_bump
+  push_to_git_remote
 
   # build the release variant
   gradle(task: "assembleRelease")
@@ -25,8 +36,8 @@ lane :beta do
   # upload to Beta by Crashlytics
   crashlytics(
     # keys for organization: SCVsoft
-    api_token: "45178e641f4bbd9b777cedd7484c5dd9879362ad",
-    build_secret: "abac4e20f08bce38ec99b563cfe3ce39fdbbdb568dae0ee3da0bfd404fface1d",
+    api_token: ENV["CRASHLYTICS_API_TOKEN"],
+    build_secret: ENV["CRASHLYTICS_BUILD_SECRET"],
     groups: "Temis"
   )
 end
