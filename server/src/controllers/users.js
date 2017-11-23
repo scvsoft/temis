@@ -1,25 +1,25 @@
-import Users from '../models/user'
+import getUsersModel from '../models/user'
+import getMongoose from '../models/mongoose'
 
-export const getUser = (req, res) => {
-  if (req.params.userId !== req.user.id) {
-    res.status(401).json('The user is not authorized to access this resource')
-  } else {
-    res.status(200).json(req.user)
-  }
-}
+export default () => {
+  const { putUser } = getUsersModel(getMongoose())
 
-export const putUser = (req, res) => {
-  if (req.params.userId !== req.user.id) {
-    res.status(401).json('The user is not authorized to access this resource')
-  } else {
-    const user = {
-      id: req.user.id,
-      name: req.body.name,
-      email: req.body.email,
-      gender: req.body.gender,
-      birthday: req.body.birthday
+  const get = (req, res) => {
+    if (req.params.userId !== req.auth.id) {
+      res.status(401).json('The user is not authorized to access this resource')
+    } else {
+      res.status(200).json(req.user)
     }
-    Users.put(req.user.id, user)
-    res.status(200).json(user)
   }
+
+  const put = async (req, res) => {
+    if (req.params.userId !== req.auth.id) {
+      res.status(401).json('The user is not authorized to access this resource')
+    } else {
+      const user = await putUser(req.body, req.auth.id)
+      res.status(200).json(user)
+    }
+  }
+
+  return { get, put }
 }
