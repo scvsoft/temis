@@ -42,7 +42,6 @@ platform :ios do
     match(type: "adhoc") # more information: https://codesigning.guide
     gym(
       clean: true,
-      export_method: "ad-hoc",
       scheme: "temis"
     )
     crashlytics(
