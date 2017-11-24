@@ -39,6 +39,11 @@ platform :ios do
   desc "Submit a new Beta Build to Crashlytics"
   lane :beta do
     load_keys
+    ensure_git_status_clean
+    increment_build_number
+    commit_version_bump(
+      xcodeproj: 'temis.xcodeprojß'
+    )
     match(type: "adhoc") # more information: https://codesigning.guide
     gym(
       clean: true,
