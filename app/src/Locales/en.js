@@ -4,6 +4,13 @@ export default {
   },
   screens: {
     signIn: {
+      title: 'Welcome',
+      description: 'A voice to report acts of violence and create awareness',
+      instructions:
+        'To continue we need to link your Facebook account ' +
+        'in order to be able to post in your name in case you have an emergency. ' +
+        'However what you report in Temis could be anonymous if you desire to.' +
+        'We will store your sex and age only for statistical purposes.',
       button: 'Login with Facebook'
     },
     help: {
