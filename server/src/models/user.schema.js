@@ -19,4 +19,4 @@ export const userSchema = new Schema({
   }
 })
 
-userSchema.set('toJSON', { getters: true, virtuals: true })
+userSchema.set('toJSON', { getters: true })

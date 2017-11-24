@@ -44,6 +44,7 @@ export default () => {
       if (!currentUser) {
         isNew = true
         currentUser = await putUser(req.user)
+        delete currentUser.facebookProvider
       }
 
       // prepare token for API
