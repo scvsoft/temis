@@ -42,7 +42,7 @@ platform :ios do
     ensure_git_status_clean
     increment_build_number
     commit_version_bump(
-      xcodeproj: 'temis.xcodeprojß'
+      xcodeproj: 'temis.xcodeproj'
     )
     match(type: "adhoc") # more information: https://codesigning.guide
     gym(
