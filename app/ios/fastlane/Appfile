@@ -1,0 +1,7 @@
+app_identifier "care.temis.app" # The bundle identifier of your app
+apple_id "mobile@scvsoft.com" # Your Apple email address
+
+team_id "KBCTR8Z483" # Developer Portal Team ID
+
+# you can even provide different app identifiers, Apple IDs and team names per lane:
+# More information: https://docs.fastlane.tools/advanced/#appfile
