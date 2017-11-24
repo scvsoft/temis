@@ -18,7 +18,7 @@ describe('User', () => {
 
     const newUser = await putUser({
       name: 'Rod',
-      email: 'aaa@gmail.com',
+      email: 'yyy@gmail.com',
       birthday: '11/23/2017',
       gender: 'male',
       facebookProvider: {

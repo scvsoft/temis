@@ -1,6 +1,7 @@
 import nock from 'nock'
 import chai, { expect } from 'chai'
 import chaiHttp from 'chai-http'
+import chaid from 'chaid'
 import http from 'http'
 import dotenv from 'dotenv'
 import createApp from '../src/app'
@@ -17,6 +18,7 @@ const { putUser } = getUsersModel(mongoose)
 const app = createApp()
 const server = http.createServer(app)
 chai.use(chaiHttp)
+chai.use(chaid)
 
 describe('Authentication', () => {
   beforeEach(() => {

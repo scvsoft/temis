@@ -7,8 +7,7 @@ export default () => {
   const { getUser, getUserByFacebookId, putUser } = getUsersModel(getMongoose())
 
   const errorHandler = (err, req, res, next) => {
-    //console.error("Error: ", err.name, err.message, err.status, err.stack)
-    //console.error("Error: ", err)
+    // console.error("Error: ", err.name, err.message, err.status, err.stack)
 
     // JWT
     if (err.name === 'UnauthorizedError') {
