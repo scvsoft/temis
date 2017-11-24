@@ -31,7 +31,7 @@ describe('Users endpoint', () => {
     test('returns the profile if JWT token is present and valid', async done => {
       const newUser = await putUser({
         name: 'Rod',
-        email: 'xxx@gmail.com',
+        email: 'ooo@gmail.com',
         birthday: '11/23/2017',
         gender: 'male',
         facebookProvider: {
@@ -50,7 +50,7 @@ describe('Users endpoint', () => {
           expect(res.body)
             .to.have.property('_id')
             .to.be.id(mongoose.Types.ObjectId(newUser._id))
-          expect(res.body).to.have.property('email', 'xxx@gmail.com')
+          expect(res.body).to.have.property('email', 'ooo@gmail.com')
           done()
         })
     })
