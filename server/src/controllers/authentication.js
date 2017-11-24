@@ -39,8 +39,7 @@ export default () => {
     } else {
       // store user
       let currentUser = await getUserByFacebookId(req.user.facebookProvider.id)
-      //console.log(`Current user ${req.user.facebookProvider.id}`)
-      //console.log(currentUser)
+
       let isNew = false
       if (!currentUser) {
         isNew = true
