@@ -86,7 +86,7 @@ describe('Users endpoint', () => {
         birthday: '11/23/2017',
         gender: 'male',
         facebookProvider: {
-          id: '106458953461565',
+          id: '106458953461566',
           token: 'token'
         }
       })
