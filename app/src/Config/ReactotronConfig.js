@@ -1,4 +1,4 @@
-import Config from 'app/Config/DebugSettings'
+import Config from 'app/Config/Settings'
 import Reactotron from 'reactotron-react-native'
 
 if (Config.useReactotron) {
