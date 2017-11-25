@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import helmet from 'helmet'
 import authenticationRoutesBuilder from './routes/authentication'
 import usersRoutesBuilder from './routes/users'
+import reportsRoutesBuilder from './routes/reports'
 import authenticationControllerBuilder from './controllers/authentication'
 
 export default () => {
@@ -24,6 +25,8 @@ export default () => {
   app.use(fetchCurrentUser)
 
   app.use('/users', usersRoutesBuilder())
+
+  app.use('/reports', reportsRoutesBuilder())
 
   app.use(errorHandler)
 

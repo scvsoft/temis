@@ -4,25 +4,33 @@ import chaiHttp from 'chai-http'
 import chaid from 'chaid'
 import http from 'http'
 import dotenv from 'dotenv'
-import createApp from '../src/app'
-import authenticationControllerBuilder from '../src/controllers/authentication'
-import getUsersModel from '../src/models/user'
-import getMongoose from '../src/models/mongoose'
+import createApp from '../../src/app'
+import authenticationControllerBuilder from '../../src/controllers/authentication'
+import getUsersModel from '../../src/models/user'
+import getMongoose from '../../src/models/mongoose'
 
-// specific test settings
-dotenv.config()
-process.env.MONGODB_DBNAME = 'temis-test'
-
-const mongoose = getMongoose()
-const { putUser } = getUsersModel(mongoose)
-const { createToken } = authenticationControllerBuilder()
-
-const app = createApp()
-const server = http.createServer(app)
 chai.use(chaiHttp)
 chai.use(chaid)
 
 describe('Server', () => {
+  let mongoose
+  let userModel
+  let server
+  let createToken
+
+  beforeAll(() => {
+    dotenv.config()
+    // specific test settings
+    process.env.MONGODB_DBNAME = 'temis-test'
+
+    mongoose = getMongoose()
+    userModel = getUsersModel(mongoose)
+
+    const app = createApp()
+    server = http.createServer(app)
+    createToken = authenticationControllerBuilder().createToken
+  })
+
   beforeEach(() => {
     mongoose.connection.dropDatabase()
     process.env.JWT_EXPIRATION = '2h'
@@ -79,7 +87,7 @@ describe('Server', () => {
 
   describe('Sign in', () => {
     test('returns 200, the JWT token and the profile when the user is already registered', async done => {
-      await putUser({
+      await userModel.putUser({
         name: 'Rod',
         email: 'xxx@gmail.com',
         birthday: '11/23/2017',
@@ -106,7 +114,7 @@ describe('Server', () => {
 
   describe('Get User profile', () => {
     test('returns the profile if JWT token is present and valid', async done => {
-      const newUser = await putUser({
+      const newUser = await userModel.putUser({
         name: 'Rod',
         email: 'xxx@gmail.com',
         birthday: '11/23/2017',
@@ -157,7 +165,7 @@ describe('Server', () => {
     })
 
     test('returns an error if user doesnt match token (💣)', async done => {
-      const newUser = await putUser({
+      const newUser = await userModel.putUser({
         name: 'Rod',
         email: 'xxx@gmail.com',
         birthday: '11/23/2017',
@@ -192,7 +200,7 @@ describe('Server', () => {
           token: 'token'
         }
       }
-      const newUser = await putUser(userProperties)
+      const newUser = await userModel.putUser(userProperties)
       const token = createToken({ id: newUser._id })
 
       chai
@@ -242,7 +250,7 @@ describe('Server', () => {
           token: 'token'
         }
       }
-      const newUser = await putUser(userProperties)
+      const newUser = await userModel.putUser(userProperties)
       const token = createToken({ id: newUser._id })
 
       chai
