@@ -58,3 +58,7 @@ typings/
 .env
 
 app/android/fastlane/keys
+
+app/ios/fastlane/keys
+
+app/ios/temis.app.dSYM.zip
