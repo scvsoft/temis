@@ -49,19 +49,24 @@ describe('Report', () => {
         .to.have.property('_id')
         .to.be.id(mongoose.Types.ObjectId(newReportId))
       expect(report)
-        .to.have.property('user')
-        .to.have.property('name', 'Rod')
-      expect(report)
         .to.have.property('location')
         .to.be.an('array')
         .to.have.lengthOf(2)
       done()
     })
 
-    test('returns null if the report does not exists', async done => {
-      const report = await getReport('507f1f77bcf86cd799439012')
-      // eslint-disable-next-line
-      expect(report).to.be.null
+    test('returns an existing report and expands user', async done => {
+      const report = await getReport(newReportId, 'user')
+      expect(report)
+        .to.have.property('_id')
+        .to.be.id(mongoose.Types.ObjectId(newReportId))
+      expect(report)
+        .to.have.property('user')
+        .to.have.property('name', 'Rod')
+      expect(report)
+        .to.have.property('location')
+        .to.be.an('array')
+        .to.have.lengthOf(2)
       done()
     })
   })
@@ -73,9 +78,7 @@ describe('Report', () => {
         description: 'It happened again'
       })
       expect(newReport).to.have.property('_id')
-      expect(newReport)
-        .to.have.property('user')
-        .to.have.property('name', 'Rod')
+      expect(newReport).to.have.property('description', 'It happened again')
       done()
     })
 

@@ -38,13 +38,6 @@ describe('User', () => {
       expect(rod).to.have.property('name', 'Rod')
       done()
     })
-
-    test('returns null if the user does not exists', async done => {
-      const user = await getUser('507f1f77bcf86cd799439012')
-      // eslint-disable-next-line
-      expect(user).to.be.null
-      done()
-    })
   })
 
   describe('putUser', () => {

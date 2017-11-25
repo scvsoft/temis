@@ -3,8 +3,19 @@ import { reportSchema } from './report.schema'
 export default mongoose => {
   const Report = mongoose.model('Report', reportSchema)
 
-  const getReport = id => {
-    return Report.findById(id).populate('user')
+  const getReport = (id, expand) => {
+    let query
+    try {
+      query = Report.findById(id)
+    } catch (err) {
+      return null
+    }
+
+    if (expand) {
+      return query.populate(expand)
+    } else {
+      return query
+    }
   }
 
   const putReport = (reportProperties, id) => {
@@ -17,7 +28,7 @@ export default mongoose => {
         runValidators: true,
         setDefaultsOnInsert: true
       }
-    ).populate('user')
+    )
   }
 
   return { getReport, putReport }
