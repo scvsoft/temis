@@ -21,9 +21,11 @@
     "react-native-navigation": "^1.1.262",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
+    "redux-observable": "^0.17.0",
     "redux-persist": "^5.4.0",
     "redux-reset": "^0.3.0",
-    "reduxsauce": "^0.7.0"
+    "reduxsauce": "^0.7.0",
+    "rxjs": "^5.5.2"
   },
   "devDependencies": {
     "babel-jest": "21.2.0",
