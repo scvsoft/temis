@@ -3,8 +3,8 @@ language: node_js
 node_js:
   - "stable"
 
-#services:
-#  - mongodb
+services:
+  - mongodb
 
 cache:
   directories:
@@ -13,10 +13,6 @@ cache:
 install:
   - npm --prefix app install
   - npm --prefix server install
-
-#before_script:
-#  - sleep 15
-#  - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter

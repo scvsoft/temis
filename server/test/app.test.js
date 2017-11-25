@@ -1,21 +1,32 @@
 import nock from 'nock'
 import chai, { expect } from 'chai'
 import chaiHttp from 'chai-http'
+import chaid from 'chaid'
 import http from 'http'
 import dotenv from 'dotenv'
 import createApp from '../src/app'
-import { createToken } from '../src/controllers/authentication'
-import Users from '../src/models/user'
+import authenticationControllerBuilder from '../src/controllers/authentication'
+import getUsersModel from '../src/models/user'
+import getMongoose from '../src/models/mongoose'
 
+// specific test settings
 dotenv.config()
+process.env.MONGODB_DBNAME = 'temis-test'
+
+const mongoose = getMongoose()
+const { putUser } = getUsersModel(mongoose)
+const { createToken } = authenticationControllerBuilder()
 
 const app = createApp()
 const server = http.createServer(app)
-// nock.recorder.rec();
 chai.use(chaiHttp)
+chai.use(chaid)
 
 describe('Server', () => {
   beforeEach(() => {
+    mongoose.connection.dropDatabase()
+    process.env.JWT_EXPIRATION = '2h'
+
     nock('https://graph.facebook.com:443', { encodedQueryParams: true })
       .get(/\/me$/)
       .query(queryObj => queryObj.access_token === 'valid_token')
@@ -37,10 +48,6 @@ describe('Server', () => {
           fbtrace_id: 'FdNcpt5NRHD'
         }
       })
-
-    Users.clear()
-
-    process.env.JWT_EXPIRATION = '2h'
   })
 
   describe('Sign up', () => {
@@ -62,7 +69,8 @@ describe('Server', () => {
         .send({ access_token: 'valid_token' })
         .end((err, res) => {
           expect(res).to.have.status(201)
-          expect(res.body).to.have.property('id', '106458953461566')
+          expect(res.body).to.have.property('_id')
+          expect(res.body).to.have.property('name', 'Margaret Wongberg')
           expect(res).to.have.header('x-auth-token')
           done()
         })
@@ -70,13 +78,16 @@ describe('Server', () => {
   })
 
   describe('Sign in', () => {
-    test('returns 200, the JWT token and the profile when the user is already registered', done => {
-      Users.put(106458953461566, {
-        id: '106458953461566',
-        name: 'Name',
-        email: 'Email',
-        gender: 'Gender',
-        birthday: 'Birthday'
+    test('returns 200, the JWT token and the profile when the user is already registered', async done => {
+      await putUser({
+        name: 'Rod',
+        email: 'xxx@gmail.com',
+        birthday: '11/23/2017',
+        gender: 'male',
+        facebookProvider: {
+          id: '106458953461566',
+          token: 'token'
+        }
       })
 
       chai
@@ -85,7 +96,8 @@ describe('Server', () => {
         .send({ access_token: 'valid_token' })
         .end((err, res) => {
           expect(res).to.have.status(200)
-          expect(res.body).to.have.property('id', '106458953461566')
+          expect(res.body).to.have.property('_id')
+          expect(res.body).to.have.property('email', 'xxx@gmail.com')
           expect(res).to.have.header('x-auth-token')
           done()
         })
@@ -93,24 +105,29 @@ describe('Server', () => {
   })
 
   describe('Get User profile', () => {
-    test('returns the profile if JWT token is present and valid', done => {
-      const token = createToken({ id: 106458953461566 })
-      Users.put(106458953461566, {
-        id: '106458953461566',
-        name: 'Name',
-        email: 'Email',
-        gender: 'Gender',
-        birthday: 'Birthday',
-        facebookProvider: {}
+    test('returns the profile if JWT token is present and valid', async done => {
+      const newUser = await putUser({
+        name: 'Rod',
+        email: 'xxx@gmail.com',
+        birthday: '11/23/2017',
+        gender: 'male',
+        facebookProvider: {
+          id: '106458953461566',
+          token: 'token'
+        }
       })
+      const token = createToken({ id: newUser._id })
 
       chai
         .request(server)
-        .get('/users/106458953461566')
+        .get(`/users/${newUser._id}`)
         .set('x-auth-token', token)
         .end((err, res) => {
           expect(res).to.have.status(200)
-          expect(res.body).to.have.property('id', '106458953461566')
+          expect(res.body)
+            .to.have.property('_id')
+            .to.be.id(mongoose.Types.ObjectId(newUser._id))
+          expect(res.body).to.have.property('email', 'xxx@gmail.com')
           done()
         })
     })
@@ -139,17 +156,18 @@ describe('Server', () => {
         })
     })
 
-    test('returns an error if user doesnt match token (💣)', done => {
-      const token = createToken({ id: 106458953461566 })
-
-      Users.put(106458953461566, {
-        id: '106458953461566',
-        name: 'Name',
-        email: 'Email',
-        gender: 'Gender',
-        birthday: 'Birthday',
-        facebookProvider: {}
+    test('returns an error if user doesnt match token (💣)', async done => {
+      const newUser = await putUser({
+        name: 'Rod',
+        email: 'xxx@gmail.com',
+        birthday: '11/23/2017',
+        gender: 'male',
+        facebookProvider: {
+          id: '106458953461566',
+          token: 'token'
+        }
       })
+      const token = createToken({ id: newUser._id })
 
       chai
         .request(server)
@@ -163,24 +181,24 @@ describe('Server', () => {
   })
 
   describe('Put User profile', () => {
-    test('sets the user profile if JWT token is present and valid', done => {
-      debugger
-      const token = createToken({ id: 106458953461566 })
-      const user = {
-        id: '106458953461566',
-        name: 'Name',
-        email: 'Email',
-        gender: 'Gender',
-        birthday: 'Birthday',
-        facebookProvider: {}
+    test('sets the user profile if JWT token is present and valid', async done => {
+      const userProperties = {
+        name: 'Rod',
+        email: 'xxx@gmail.com',
+        birthday: '11/23/2017',
+        gender: 'male',
+        facebookProvider: {
+          id: '106458953461566',
+          token: 'token'
+        }
       }
-
-      Users.put(106458953461566, user)
+      const newUser = await putUser(userProperties)
+      const token = createToken({ id: newUser._id })
 
       chai
         .request(server)
-        .put('/users/106458953461566')
-        .send({ ...user, name: 'Olivia' })
+        .put(`/users/${newUser._id}`)
+        .send({ ...userProperties, name: 'Olivia' })
         .set('x-auth-token', token)
         .end((err, res) => {
           expect(res).to.have.status(200)
@@ -213,23 +231,24 @@ describe('Server', () => {
         })
     })
 
-    test('returns an error if user doesnt match token', done => {
-      const token = createToken({ id: 106458953461566 })
-      const user = {
-        id: '106458953461566',
-        name: 'Name',
-        email: 'Email',
-        gender: 'Gender',
-        birthday: 'Birthday',
-        facebookProvider: {}
+    test('returns an error if user doesnt match token', async done => {
+      const userProperties = {
+        name: 'Rod',
+        email: 'xxx@gmail.com',
+        birthday: '11/23/2017',
+        gender: 'male',
+        facebookProvider: {
+          id: '106458953461566',
+          token: 'token'
+        }
       }
-
-      Users.put(106458953461566, user)
+      const newUser = await putUser(userProperties)
+      const token = createToken({ id: newUser._id })
 
       chai
         .request(server)
         .put('/users/1')
-        .send({ ...user, id: 1, name: 'Fake name' })
+        .send({ ...userProperties, id: 1, name: 'Fake name' })
         .set('x-auth-token', token)
         .end((err, res) => {
           expect(res).to.have.status(401)
@@ -238,5 +257,8 @@ describe('Server', () => {
     })
   })
 
-  afterAll(done => server.close(done))
+  afterAll(done => {
+    mongoose.connection.close(done)
+    server.close(done)
+  })
 })
