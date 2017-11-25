@@ -1,11 +1,23 @@
-// TODO: Replace by a persistent model (https://github.com/scvsoft/temis/issues/11)
+import { userSchema } from './user.schema'
 
-let users = []
+export default mongoose => {
+  const User = mongoose.model('User', userSchema)
 
-export default {
-  get: id => users[id],
-  put: (id, user) => {
-    users[id] = user
-  },
-  clear: () => (users = [])
+  const getUser = id => {
+    return User.findById(id)
+  }
+
+  const getUserByFacebookId = facebookId => {
+    return User.findOne({ 'facebookProvider.id': facebookId })
+  }
+
+  const putUser = (userProperties, id) => {
+    if (id) {
+      return User.findByIdAndUpdate(id, userProperties, { new: true })
+    } else {
+      return User.create(userProperties)
+    }
+  }
+
+  return { getUser, getUserByFacebookId, putUser }
 }

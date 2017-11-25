@@ -14,6 +14,7 @@ A voice to report acts of violence and create awareness
 
 ## Setup
 - Run `npm install`
+- Set up MongoDb (https://www.mongodb.com/)
 - Copy the file `.env.sample` into `.env` and provide the correct settings.
 
 ## Test

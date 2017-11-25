@@ -1,11 +1,13 @@
 import express from 'express'
-import { getUser, putUser } from '../controllers/users'
+import usersControllerBuilder from '../controllers/users'
 
 export default () => {
   const router = express.Router()
 
-  router.get('/:userId', getUser)
-  router.put('/:userId', putUser)
+  const { get, put } = usersControllerBuilder()
+
+  router.get('/:userId', get)
+  router.put('/:userId', put)
 
   return router
 }
