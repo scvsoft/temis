@@ -1,6 +1,5 @@
 const images = {
   background: require('../Images/texture.png'),
-  background2: require('../Images/texture2.png'),
   logo: require('../Images/logo.png'),
   'tabs.help': require('../Images/Tabs/help.png'),
   'tabs.reports': require('../Images/Tabs/reports.png'),

@@ -1,9 +1,11 @@
 import Config from 'app/Config/DebugSettings'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { persistStore, persistCombineReducers } from 'redux-persist'
+import { combineEpics, createEpicMiddleware } from 'redux-observable'
 import storage from 'redux-persist/es/storage'
 import reduxReset from 'redux-reset'
 import { reducer as report } from './Report'
+import { reducer as user, epic as userEpic } from './User'
 
 const config = {
   key: 'root',
@@ -13,8 +15,13 @@ const config = {
 const middleware = []
 
 const rootReducer = persistCombineReducers(config, {
+  user,
   report
 })
+
+const rootEpic = combineEpics(userEpic)
+
+middleware.push(createEpicMiddleware(rootEpic))
 
 const actualCreateStore = Config.useReactotron
   ? console.tron.createStore
