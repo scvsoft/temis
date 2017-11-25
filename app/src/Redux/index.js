@@ -1,4 +1,4 @@
-import Config from 'app/Config/DebugSettings'
+import Config from 'app/Config/Settings'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { persistStore, persistCombineReducers } from 'redux-persist'
 import { combineEpics, createEpicMiddleware } from 'redux-observable'

@@ -13,6 +13,7 @@
     "lint:json": "jsonlint"
   },
   "dependencies": {
+    "apisauce": "^0.14.1",
     "ramda": "^0.25.0",
     "react": "16.0.0",
     "react-native": "0.50.1",

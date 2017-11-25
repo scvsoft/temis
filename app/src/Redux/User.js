@@ -1,4 +1,5 @@
-import { login } from 'app/Api/Facebook'
+import { login as facebookLogin } from 'app/Api/Facebook'
+import { loginUser } from 'app/Api/Backend'
 import { goHome } from 'app/Api/Navigation'
 import { createReducer, createActions } from 'reduxsauce'
 import { Observable } from 'rxjs'
@@ -6,18 +7,16 @@ import 'rxjs/add/operator/mergeMap'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/do'
 
-const INITIAL_STATE = {
-  token: null
-}
+const INITIAL_STATE = {}
 
 const { Types, Creators } = createActions({
   startLogin: null,
-  userLogged: ['token'],
+  userLogged: ['user'],
   loginFailed: ['error'],
   logout: null
 })
 
-export const userLogged = (state, { token }) => ({ ...state, token })
+export const userLogged = (state, user) => user
 
 export const logout = state => INITIAL_STATE
 
@@ -33,9 +32,10 @@ export const reducer = createReducer(INITIAL_STATE, {
 export const epic = (action$, store) =>
   action$
     .ofType(Types.START_LOGIN)
-    .flatMap(() => login())
+    .flatMap(() => facebookLogin())
+    .flatMap(({ token }) => loginUser(token))
     .do(() => {
       goHome()
     })
-    .map(({ token }) => Creators.userLogged(token))
+    .map(user => Creators.userLogged(user))
     .catch(error => Observable.of(Creators.loginFailed(error)))
