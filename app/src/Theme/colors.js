@@ -5,5 +5,6 @@ export default {
   mainDarker: '#5507C2',
   accent: '#00e5ff',
   disabled: '#b388ff',
+  background: '#d8dfe3',
   title: 'white'
 }
