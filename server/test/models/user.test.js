@@ -1,8 +1,8 @@
 import chai, { expect } from 'chai'
 import chaid from 'chaid'
 import dotenv from 'dotenv'
-import getUsersModel from '../src/models/user'
-import getMongoose from '../src/models/mongoose'
+import getUsersModel from '../../src/models/user'
+import getMongoose from '../../src/models/mongoose'
 
 dotenv.config()
 process.env.MONGODB_DBNAME = 'temis-test'

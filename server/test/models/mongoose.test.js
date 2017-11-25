@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-import getMongoose from '../src/models/mongoose'
+import getMongoose from '../../src/models/mongoose'
 
 dotenv.config()
 process.env.MONGODB_DBNAME = 'temis-test'

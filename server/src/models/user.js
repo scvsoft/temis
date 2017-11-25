@@ -12,11 +12,16 @@ export default mongoose => {
   }
 
   const putUser = (userProperties, id) => {
-    if (id) {
-      return User.findByIdAndUpdate(id, userProperties, { new: true })
-    } else {
-      return User.create(userProperties)
-    }
+    return User.findByIdAndUpdate(
+      id || mongoose.Types.ObjectId(),
+      userProperties,
+      {
+        new: true,
+        upsert: true,
+        runValidators: true,
+        setDefaultsOnInsert: true
+      }
+    )
   }
 
   return { getUser, getUserByFacebookId, putUser }

@@ -4,10 +4,10 @@ import chaiHttp from 'chai-http'
 import chaid from 'chaid'
 import http from 'http'
 import dotenv from 'dotenv'
-import createApp from '../src/app'
-import authenticationControllerBuilder from '../src/controllers/authentication'
-import getUsersModel from '../src/models/user'
-import getMongoose from '../src/models/mongoose'
+import createApp from '../../src/app'
+import authenticationControllerBuilder from '../../src/controllers/authentication'
+import getUsersModel from '../../src/models/user'
+import getMongoose from '../../src/models/mongoose'
 
 // specific test settings
 dotenv.config()
