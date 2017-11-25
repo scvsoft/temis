@@ -9,7 +9,7 @@
     "prestart": "npm run lint",
     "start": "babel-node src/main.js",
     "dev": "nodemon --exec npm start",
-    "test": "jest",
+    "test": "jest --runInBand",
     "test:watch": "npm run test -- --watch",
     "test-ci": "npm run lint && npm run test -- --coverage && cat ./coverage/lcov.info | coveralls && codecov",
     "build": "babel src -d dist",
