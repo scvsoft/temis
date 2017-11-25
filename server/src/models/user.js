@@ -1,5 +1,6 @@
 import { userSchema } from './user.schema'
 
+// TODO: Abstract this, it's similar to the Report model
 export default mongoose => {
   const User = mongoose.model('User', userSchema)
 
