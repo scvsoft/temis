@@ -4,19 +4,24 @@ import dotenv from 'dotenv'
 import getUsersModel from '../../src/models/user'
 import getMongoose from '../../src/models/mongoose'
 
-dotenv.config()
-process.env.MONGODB_DBNAME = 'temis-test'
-const mongoose = getMongoose()
-const { getUser, getUserByFacebookId, putUser } = getUsersModel(mongoose)
-let newUserId
-
 chai.use(chaid)
 
 describe('User', () => {
+  let mongoose
+  let userModel
+  let newUserId
+
+  beforeAll(() => {
+    dotenv.config()
+    process.env.MONGODB_DBNAME = 'temis-test'
+    mongoose = getMongoose()
+    userModel = getUsersModel(mongoose)
+  })
+
   beforeEach(async () => {
     mongoose.connection.dropDatabase()
 
-    const newUser = await putUser({
+    const newUser = await userModel.putUser({
       name: 'Rod',
       email: 'xxx@gmail.com',
       birthday: '11/23/2017',
@@ -31,7 +36,7 @@ describe('User', () => {
 
   describe('getUser', () => {
     test('returns an existing user', async done => {
-      const rod = await getUser(newUserId)
+      const rod = await userModel.getUser(newUserId)
       expect(rod)
         .to.have.property('_id')
         .to.be.id(mongoose.Types.ObjectId(newUserId))
@@ -42,7 +47,7 @@ describe('User', () => {
 
   describe('putUser', () => {
     test('creates a new user', async done => {
-      const newUser = await putUser({
+      const newUser = await userModel.putUser({
         name: 'Olivia',
         email: 'yyy@gmail.com',
         birthday: '11/23/2017',
@@ -58,7 +63,7 @@ describe('User', () => {
     })
 
     test('updates an existing user', async done => {
-      const updatedUser = await putUser(
+      const updatedUser = await userModel.putUser(
         {
           name: 'Olivia',
           email: 'yyy@gmail.com',
@@ -82,7 +87,7 @@ describe('User', () => {
 
   describe('getUserByFacebookId', () => {
     test('returns an existing user', async done => {
-      const rod = await getUserByFacebookId('106458953461566')
+      const rod = await userModel.getUserByFacebookId('106458953461566')
       expect(rod)
         .to.have.property('_id')
         .to.be.id(mongoose.Types.ObjectId(newUserId))
@@ -91,7 +96,7 @@ describe('User', () => {
     })
 
     test('returns null if the user does not exists', async done => {
-      const user = await getUserByFacebookId(1002)
+      const user = await userModel.getUserByFacebookId(1002)
       // eslint-disable-next-line
       expect(user).to.be.null
       done()

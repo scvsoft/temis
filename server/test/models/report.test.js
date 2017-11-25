@@ -5,15 +5,21 @@ import getMongoose from '../../src/models/mongoose'
 import getUsersModel from '../../src/models/user'
 import getReportsModel from '../../src/models/report'
 
-dotenv.config()
-process.env.MONGODB_DBNAME = 'temis-test'
-const mongoose = getMongoose()
-const { putUser } = getUsersModel(mongoose)
-const { getReport, putReport } = getReportsModel(mongoose)
-
 chai.use(chaid)
 
 describe('Report', () => {
+  let mongoose
+  let userModel, reportModel
+
+  beforeAll(() => {
+    dotenv.config()
+    process.env.MONGODB_DBNAME = 'temis-test'
+
+    mongoose = getMongoose()
+    userModel = getUsersModel(mongoose)
+    reportModel = getReportsModel(mongoose)
+  })
+
   let newReportId
 
   const reportProperties = {
@@ -24,7 +30,7 @@ describe('Report', () => {
   beforeEach(async () => {
     mongoose.connection.dropDatabase()
 
-    const newUser = await putUser({
+    const newUser = await userModel.putUser({
       name: 'Rod',
       email: 'ppp@gmail.com',
       birthday: '11/23/2017',
@@ -37,14 +43,14 @@ describe('Report', () => {
 
     reportProperties.user = newUser._id
 
-    const newReport = await putReport(reportProperties)
+    const newReport = await reportModel.putReport(reportProperties)
 
     newReportId = newReport._id
   })
 
   describe('getReport', () => {
     test('returns an existing report', async done => {
-      const report = await getReport(newReportId)
+      const report = await reportModel.getReport(newReportId)
       expect(report)
         .to.have.property('_id')
         .to.be.id(mongoose.Types.ObjectId(newReportId))
@@ -56,7 +62,7 @@ describe('Report', () => {
     })
 
     test('returns an existing report and expands user', async done => {
-      const report = await getReport(newReportId, 'user')
+      const report = await reportModel.getReport(newReportId, 'user')
       expect(report)
         .to.have.property('_id')
         .to.be.id(mongoose.Types.ObjectId(newReportId))
@@ -73,7 +79,7 @@ describe('Report', () => {
 
   describe('putReport', () => {
     test('creates a new report', async done => {
-      const newReport = await putReport({
+      const newReport = await reportModel.putReport({
         ...reportProperties,
         description: 'It happened again'
       })
@@ -84,7 +90,7 @@ describe('Report', () => {
     })
 
     test('updates an existing report', async done => {
-      const updatedReport = await putReport(
+      const updatedReport = await reportModel.putReport(
         {
           ...reportProperties,
           description: 'Please help!'
@@ -99,7 +105,7 @@ describe('Report', () => {
 
     test('fails with missing required fields', async done => {
       try {
-        await putReport({
+        await reportModel.putReport({
           date: Date.now
         })
       } catch (err) {

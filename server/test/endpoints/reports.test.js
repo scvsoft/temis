@@ -9,28 +9,37 @@ import getUsersModel from '../../src/models/user'
 import getReportsModel from '../../src/models/report'
 import getMongoose from '../../src/models/mongoose'
 
-// specific test settings
-dotenv.config()
-process.env.MONGODB_DBNAME = 'temis-test'
-
-const mongoose = getMongoose()
-const { putUser } = getUsersModel(mongoose)
-const { putReport } = getReportsModel(mongoose)
-const { createToken } = authenticationControllerBuilder()
-
-const app = createApp()
-const server = http.createServer(app)
 chai.use(chaiHttp)
 chai.use(chaid)
 
 describe('Server', () => {
   let token
   let userId
+  let mongoose
+  let userModel
+  let reportModel
+  let server
+  let createToken
+
+  beforeAll(() => {
+    dotenv.config()
+    // specific test settings
+    process.env.MONGODB_DBNAME = 'temis-test'
+    process.env.JWT_EXPIRATION = '2h'
+
+    mongoose = getMongoose()
+    userModel = getUsersModel(mongoose)
+    reportModel = getReportsModel(mongoose)
+
+    const app = createApp()
+    server = http.createServer(app)
+    createToken = authenticationControllerBuilder().createToken
+  })
 
   beforeEach(async () => {
     mongoose.connection.dropDatabase()
 
-    const user = await putUser({
+    const user = await userModel.putUser({
       name: 'Rod',
       email: 'abc@gmail.com',
       birthday: '11/23/2017',
@@ -54,7 +63,7 @@ describe('Server', () => {
         user: userId
       }
 
-      const newReport = await putReport(reportProperties)
+      const newReport = await reportModel.putReport(reportProperties)
 
       chai
         .request(server)
@@ -80,7 +89,7 @@ describe('Server', () => {
         user: userId
       }
 
-      const newReport = await putReport(reportProperties)
+      const newReport = await reportModel.putReport(reportProperties)
 
       chai
         .request(server)
