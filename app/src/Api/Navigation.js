@@ -41,6 +41,9 @@ export const triggerSignIn = () => {
   Navigation.startSingleScreenApp({
     screen: {
       screen: 'temis.signIn'
+    },
+    appStyle: {
+      navBarHidden: true
     }
   })
 }

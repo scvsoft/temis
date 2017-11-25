@@ -4,6 +4,15 @@ export default {
   },
   screens: {
     signIn: {
+      title: 'Bienvenido',
+      description:
+        'Aca iría una descripción breve del problema que plantea solucionar Temis ' +
+        'con una intro que no tenga muchas líneas.',
+      instructions:
+        'Para continuar, debemos vincular tu cuenta de Facebook ' +
+        'para poder postear en tu nombre en caso que tengas una emergencia. ' +
+        'Lo que escribas en Temis podrá ser siempre anónimo si así lo deseas y ' +
+        'sólo capturaremos tu sexo y edad con fines estadísticos.',
       button: 'Continúa con Facebook'
     },
     help: {

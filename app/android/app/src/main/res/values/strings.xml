@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">temis</string>
+    <string name="fb_app_id">128732717834556</string>
+    <string name="fb_login_protocol_scheme">fb128732717834556</string>
 </resources>
