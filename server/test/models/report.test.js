@@ -77,6 +77,7 @@ describe('Report', () => {
         ...reportProperties,
         description: 'It happened again'
       })
+
       expect(newReport).to.have.property('_id')
       expect(newReport).to.have.property('description', 'It happened again')
       done()
@@ -90,9 +91,20 @@ describe('Report', () => {
         },
         newReportId
       )
+
       expect(updatedReport).to.have.property('_id')
       expect(updatedReport).to.have.property('description', 'Please help!')
       done()
+    })
+
+    test('fails with missing required fields', async done => {
+      try {
+        await putReport({
+          date: Date.now
+        })
+      } catch (err) {
+        done()
+      }
     })
   })
 

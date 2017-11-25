@@ -132,6 +132,23 @@ describe('Server', () => {
           done()
         })
     })
+
+    test('fails to create a report with missing required fields', async done => {
+      const reportProperties = {
+        location: [-34.60235, -58.454232]
+      }
+
+      chai
+        .request(server)
+        .post('/reports')
+        .send(reportProperties)
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res).to.have.status(400)
+          expect(res.body).to.have.property('errors')
+          done()
+        })
+    })
   })
 
   afterAll(done => {

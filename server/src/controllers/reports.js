@@ -19,8 +19,12 @@ export default () => {
       ...req.body,
       user: req.auth.id
     }
-    const report = await putReport(reportProperties)
-    res.status(200).json(report)
+    try {
+      const report = await putReport(reportProperties)
+      res.status(200).json(report)
+    } catch (err) {
+      res.status(400).json(err)
+    }
   }
 
   return { get, post }

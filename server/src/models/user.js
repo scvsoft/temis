@@ -11,17 +11,21 @@ export default mongoose => {
     return User.findOne({ 'facebookProvider.id': facebookId })
   }
 
-  const putUser = (userProperties, id) => {
-    return User.findByIdAndUpdate(
-      id || mongoose.Types.ObjectId(),
-      userProperties,
-      {
-        new: true,
-        upsert: true,
-        runValidators: true,
-        setDefaultsOnInsert: true
+  const putUser = async (userProperties, id) => {
+    let user
+
+    try {
+      if (id) {
+        user = await getUser(id)
+        user.set(userProperties)
+      } else {
+        user = new User(userProperties)
       }
-    )
+    } catch (err) {
+      return err
+    }
+
+    return user.save()
   }
 
   return { getUser, getUserByFacebookId, putUser }

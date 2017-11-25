@@ -4,12 +4,7 @@ export default mongoose => {
   const Report = mongoose.model('Report', reportSchema)
 
   const getReport = (id, expand) => {
-    let query
-    try {
-      query = Report.findById(id)
-    } catch (err) {
-      return null
-    }
+    const query = Report.findById(id)
 
     if (expand) {
       return query.populate(expand)
@@ -18,17 +13,21 @@ export default mongoose => {
     }
   }
 
-  const putReport = (reportProperties, id) => {
-    return Report.findByIdAndUpdate(
-      id || mongoose.Types.ObjectId(),
-      reportProperties,
-      {
-        new: true,
-        upsert: true,
-        runValidators: true,
-        setDefaultsOnInsert: true
+  const putReport = async (reportProperties, id) => {
+    let report
+
+    try {
+      if (id) {
+        report = await getReport(id)
+        report.set(reportProperties)
+      } else {
+        report = new Report(reportProperties)
       }
-    )
+    } catch (err) {
+      return err
+    }
+
+    return report.save()
   }
 
   return { getReport, putReport }
