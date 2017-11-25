@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import I18n from 'app/Locales'
 import ReportActions from 'app/Redux/Report'
+import DefaultLayout from 'app/Layouts/Default'
 import PanicButton from 'app/Components/PanicButton'
 import Button from 'app/Components/Button'
 import { images } from 'app/Theme'
@@ -13,8 +14,7 @@ import styles from './style'
 class Help extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Image style={styles.background} source={images.background} />
+      <DefaultLayout>
         <PanicButton />
         <View style={styles.textContainer}>
           <Text style={styles.descText}>
@@ -29,7 +29,7 @@ class Help extends Component {
           onPress={this.props.report}
           text={I18n.t('screens.help.reportButton')}
         />
-      </View>
+      </DefaultLayout>
     )
   }
 }

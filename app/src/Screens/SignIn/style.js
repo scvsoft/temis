@@ -3,16 +3,7 @@ import { colors, metrics, fonts } from 'app/Theme'
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    height: '100%',
     backgroundColor: colors.main
-  },
-  background: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%'
   },
   logoContainer: {
     flexGrow: 1,
@@ -26,12 +17,14 @@ export default StyleSheet.create({
     flexGrow: 1,
     marginHorizontal: metrics.padding,
     textAlign: 'center',
+    backgroundColor: 'transparent',
     ...fonts.text
   },
   instructions: {
     color: colors.title,
     marginHorizontal: metrics.padding,
     textAlign: 'center',
+    backgroundColor: 'transparent',
     ...fonts.detail
   },
   button: {
