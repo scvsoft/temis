@@ -7,7 +7,9 @@ import 'rxjs/add/operator/mergeMap'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/do'
 
-const INITIAL_STATE = {}
+const INITIAL_STATE = {
+  authenticating: false
+}
 
 const { Types, Creators } = createActions({
   startLogin: null,
@@ -16,7 +18,14 @@ const { Types, Creators } = createActions({
   logout: null
 })
 
-export const userLogged = (state, user) => user
+export const userLogged = (state, { user }) => ({
+  ...user,
+  authenticating: false
+})
+
+export const startLogin = state => ({ authenticating: true })
+
+export const loginFailed = state => ({ authenticating: false })
 
 export const logout = state => INITIAL_STATE
 
@@ -26,16 +35,19 @@ export const UserTypes = Types
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_LOGGED]: userLogged,
+  [Types.START_LOGIN]: startLogin,
+  [Types.LOGIN_FAILED]: loginFailed,
   [Types.LOGOUT]: logout
 })
 
 export const epic = (action$, store) =>
-  action$
-    .ofType(Types.START_LOGIN)
-    .flatMap(() => facebookLogin())
-    .flatMap(({ token }) => loginUser(token))
-    .do(() => {
-      goHome()
-    })
-    .map(user => Creators.userLogged(user))
-    .catch(error => Observable.of(Creators.loginFailed(error)))
+  action$.ofType(Types.START_LOGIN).flatMap(() =>
+    Observable.fromPromise(facebookLogin())
+      .flatMap(({ token }) => loginUser(token))
+      .map(user => Creators.userLogged(user))
+      .do(() => {
+        goHome()
+      })
+      .delay(500)
+      .catch(error => Observable.of(Creators.loginFailed(error)))
+  )
