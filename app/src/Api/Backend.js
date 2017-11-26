@@ -12,6 +12,6 @@ export const loginUser = access_token =>
         access_token
       })
       .then(response => {
-        return response.ok ? resolve(response.data) : reject(response.problem)
+        response.ok ? resolve(response.data) : reject(response.problem)
       })
   })

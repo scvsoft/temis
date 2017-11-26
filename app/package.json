@@ -19,6 +19,7 @@
     "react-native": "0.50.1",
     "react-native-facebook-login": "^1.6.0",
     "react-native-i18n": "^2.0.9",
+    "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-navigation": "^1.1.262",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
