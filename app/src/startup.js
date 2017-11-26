@@ -1,5 +1,5 @@
 import 'app/Config/ReactotronConfig'
-import { triggerSignIn } from 'app/Api/Navigation'
+import { triggerSignIn, goHome } from 'app/Api/Navigation'
 import registerScreens from 'app/Screens'
 import createStore from 'app/Redux'
 import { Provider } from 'react-redux'
@@ -15,4 +15,10 @@ if (Config.resetStoresOnStartup) {
   })
 }
 
-triggerSignIn()
+persistor.subscribe(() => {
+  if (store.getState().user.id) {
+    goHome()
+  } else {
+    triggerSignIn()
+  }
+})

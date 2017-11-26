@@ -1,6 +1,6 @@
 const SETTINGS = {
   useReactotron: __DEV__,
-  resetStoresOnStartup: true,
+  resetStoresOnStartup: false,
   backendURL: 'http://localhost:3000'
 }
 
