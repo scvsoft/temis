@@ -16,7 +16,7 @@ const { Types, Creators } = createActions({
   logout: null
 })
 
-export const userLogged = (state, user) => user
+export const userLogged = (state, { user }) => user
 
 export const logout = state => INITIAL_STATE
 
