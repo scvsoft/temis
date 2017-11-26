@@ -26,7 +26,7 @@ const tabs = tabNames.map(tabName => ({
   title: I18n.t(`screens.${tabName}.title`)
 }))
 
-export const goHome = () => {
+export const goHome = firstTime => {
   Navigation.startTabBasedApp({
     tabs,
     tabsStyle,
@@ -35,6 +35,13 @@ export const goHome = () => {
       ...navStyle
     }
   })
+
+  if (firstTime) {
+    Navigation.showModal({
+      screen: 'temis.profile',
+      animationType: 'none'
+    })
+  }
 }
 
 export const triggerSignIn = () => {

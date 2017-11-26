@@ -13,7 +13,7 @@ const INITIAL_STATE = {
 
 const { Types, Creators } = createActions({
   startLogin: null,
-  userLogged: ['user'],
+  userLogged: ['user', 'firstTime'],
   loginFailed: ['error'],
   logout: null
 })
@@ -44,10 +44,9 @@ export const epic = (action$, store) =>
   action$.ofType(Types.START_LOGIN).flatMap(() =>
     Observable.fromPromise(facebookLogin())
       .flatMap(({ token }) => loginUser(token))
-      .map(user => Creators.userLogged(user))
-      .do(() => {
-        goHome()
+      .map(({ user, firstTime }) => Creators.userLogged(user, firstTime))
+      .do(({ firstTime }) => {
+        goHome(firstTime)
       })
-      .delay(500)
       .catch(error => Observable.of(Creators.loginFailed(error)))
   )
