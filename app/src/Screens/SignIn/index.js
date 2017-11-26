@@ -18,8 +18,9 @@ class SignIn extends Component {
   }
 
   render() {
+    const { authenticating, startLogin } = this.props
     return (
-      <DefaultLayout style={styles.container}>
+      <DefaultLayout style={styles.container} loading={authenticating}>
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
@@ -37,7 +38,7 @@ class SignIn extends Component {
           <Button
             buttonStyle={styles.button}
             textStyle={styles.buttonText}
-            onPress={this.props.startLogin}
+            onPress={startLogin}
             text={I18n.t('screens.signIn.button')}
           />
         </View>
@@ -46,7 +47,9 @@ class SignIn extends Component {
   }
 }
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  authenticating: state.user.authenticating
+})
 
 const mapDispatchToProps = UserActions
 
