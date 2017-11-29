@@ -109,6 +109,9 @@ describe('Report', () => {
           date: Date.now
         })
       } catch (err) {
+        expect(err.errors).to.have.property('date')
+        expect(err.errors).to.have.property('description')
+        expect(err.errors).to.have.property('user')
         done()
       }
     })

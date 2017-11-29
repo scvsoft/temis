@@ -47,6 +47,16 @@ describe('Server', () => {
 
     nock('https://graph.facebook.com:443', { encodedQueryParams: true })
       .get(/\/me$/)
+      .query(queryObj => queryObj.access_token === 'valid_token_other_gender')
+      .reply(200, {
+        id: '106458953461566',
+        name: 'Margaret Bison',
+        email: 'margaret_bison@tfbnw.net',
+        gender: 'unknown'
+      })
+
+    nock('https://graph.facebook.com:443', { encodedQueryParams: true })
+      .get(/\/me$/)
       .query(queryObj => queryObj.access_token === 'invalid_token')
       .reply(400, {
         error: {
@@ -79,6 +89,21 @@ describe('Server', () => {
           expect(res).to.have.status(201)
           expect(res.body).to.have.property('_id')
           expect(res.body).to.have.property('name', 'Margaret Wongberg')
+          expect(res).to.have.header('x-auth-token')
+          done()
+        })
+    })
+
+    test('normalizes gender if other than male or female', done => {
+      chai
+        .request(server)
+        .post('/authentication/facebook')
+        .send({ access_token: 'valid_token_other_gender' })
+        .end((err, res) => {
+          expect(res).to.have.status(201)
+          expect(res.body).to.have.property('_id')
+          expect(res.body).to.have.property('name', 'Margaret Bison')
+          expect(res.body).to.have.property('gender', 'other')
           expect(res).to.have.header('x-auth-token')
           done()
         })

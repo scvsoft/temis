@@ -16,8 +16,12 @@ export default () => {
     if (req.params.userId !== req.auth.id) {
       res.status(401).json('The user is not authorized to access this resource')
     } else {
-      const user = await putUser(req.body, req.auth.id)
-      res.status(200).json(user)
+      try {
+        const user = await putUser(req.body, req.auth.id)
+        res.status(200).json(user)
+      } catch (err) {
+        res.status(400).json(err)
+      }
     }
   }
 
