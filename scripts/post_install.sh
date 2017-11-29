@@ -8,6 +8,14 @@ npm run build
 # setup NODE_ENV
 if [ ! -z "$DEPLOYMENT_GROUP_NAME=" ]; then
     export NODE_ENV=$DEPLOYMENT_GROUP_NAME
+	export FACEBOOK_CLIENTID=128732717834556
+	export FACEBOOK_CLIENTSECRET=fada2088cc5fcf83788c16285d3a535c
+	export JWT_SECRET=wGi9eZhag7yXBmeU7mM3c2QY
+	export JWT_EXPIRATION=2h
+	export PORT=3000
+	export HOST=0.0.0.0
+	export MONGODB_HOST=localhost:27017
+	export MONGODB_DBNAME=temis
 
     hasEnv=`grep "export NODE_ENV" ~/.bash_profile | cat`
     if [ -z "$hasEnv" ]; then
