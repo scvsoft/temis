@@ -290,6 +290,32 @@ describe('Server', () => {
           done()
         })
     })
+
+    test('fails to create a user with an invalid gender value', async done => {
+      const userProperties = {
+        name: 'Rod',
+        email: 'rod@gmail.com',
+        birthday: '11/23/2017',
+        gender: 'male',
+        facebookProvider: {
+          id: '106458953461566',
+          token: 'token'
+        }
+      }
+      const newUser = await userModel.putUser(userProperties)
+      const token = createToken({ id: newUser._id })
+
+      chai
+        .request(server)
+        .put(`/users/${newUser._id}`)
+        .send({ ...userProperties, gender: 'unknown' })
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res).to.have.status(400)
+          expect(res.body).to.have.property('errors')
+          done()
+        })
+    })
   })
 
   afterAll(done => {
