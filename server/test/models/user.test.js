@@ -69,6 +69,7 @@ describe('User', () => {
           email: 'yyy@gmail.com',
           birthday: '11/23/2017',
           gender: 'female',
+          anonymous: true,
           facebookProvider: {
             id: 1001,
             token: 'token'
@@ -82,6 +83,7 @@ describe('User', () => {
         .to.be.id(mongoose.Types.ObjectId(newUserId))
       expect(updatedUser).to.have.property('name', 'Olivia')
       expect(updatedUser).to.have.property('gender', 'female')
+      expect(updatedUser).to.have.property('anonymous', true)
       done()
     })
 

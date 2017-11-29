@@ -144,6 +144,7 @@ describe('Server', () => {
         email: 'xxx@gmail.com',
         birthday: '11/23/2017',
         gender: 'male',
+        anonymous: true,
         facebookProvider: {
           id: '106458953461566',
           token: 'token'
@@ -161,6 +162,7 @@ describe('Server', () => {
             .to.have.property('_id')
             .to.be.id(mongoose.Types.ObjectId(newUser._id))
           expect(res.body).to.have.property('email', 'xxx@gmail.com')
+          expect(res.body).to.have.property('anonymous', true)
           done()
         })
     })

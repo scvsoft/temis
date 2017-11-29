@@ -12,6 +12,7 @@ export const userSchema = new Schema({
     trim: true,
     unique: true
   },
+  anonymous: { type: Boolean },
   facebookProvider: {
     type: {
       id: String,
