@@ -5,3 +5,4 @@ fi
 
 cd ~/temis/server
 pm2 start dist/main.js -i 0 --name "api"
+pm2 save

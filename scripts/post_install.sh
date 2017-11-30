@@ -2,6 +2,9 @@
 set -e
 
 cd ~/temis/server
+
+mkdir logs
+
 npm install
 npm run build
 

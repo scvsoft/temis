@@ -13,7 +13,7 @@ permissions:
 hooks:
   BeforeInstall:
     - location: scripts/install.sh
-      timeout: 300
+      timeout: 600
       runas: root
   AfterInstall:
     - location: scripts/post_install.sh
