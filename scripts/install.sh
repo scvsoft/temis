@@ -8,9 +8,13 @@ yum-config-manager --enable rhui-us-east-2-rhel-server-extras rhui-us-east-2-rhe
 yum update -y
 
 # install nginx
-service httpd stop
+if [ -e /etc/init.d/httpd ]; then
+	service httpd stop
+	chkconfig httpd off
+fi
 yum remove -y httpd
 yum install -y nginx
+chkconfig nginx on
 
 # setup nginx
 mkdir --parent /home/ec2-user/temis/server/logs/
