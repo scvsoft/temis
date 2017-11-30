@@ -1,5 +1,5 @@
 import { reportSchema } from './report.schema'
-import supercluster from 'supercluster'
+import getClusters from '../lib/clusters'
 
 // TODO: Abstract this, it's similar to the User model
 export default mongoose => {
@@ -51,19 +51,11 @@ export default mongoose => {
       reportsLocations.push(report.location)
     }
 
-    // create clusters
-    const index = supercluster({
-      radius,
-      maxZoom: 1
-    })
-    index.load(reportsLocations)
-    const clusters = index.getClusters(bounds, 1)
-
     return {
       genderStats,
-      clusters
+      clusters: getClusters(reportsLocations, bounds)
     }
   }
 
-  return { getReport, putReport, findWithinBounds }
+  return { getReport, putReport, findWithinBounds, getSummary }
 }

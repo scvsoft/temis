@@ -130,10 +130,8 @@ describe('Report', () => {
       }
 
       const bounds = {
-        minLng: -34.616147,
-        minLat: -58.498758,
-        maxLng: -34.551686,
-        maxLat: -58.419478
+        lower: [-34.616147, -58.498758],
+        upper: [-34.551686, -58.419478]
       }
       const reports = await reportModel.findWithinBounds(bounds)
       expect(reports).to.have.lengthOf(5)
@@ -147,10 +145,8 @@ describe('Report', () => {
       }
 
       const bounds = {
-        minLng: -34.616147,
-        minLat: -58.498758,
-        maxLng: -34.551686,
-        maxLat: -58.419478
+        lower: [-34.616147, -58.498758],
+        upper: [-34.551686, -58.419478]
       }
       const startDate = moment().subtract(25, 'days')
       const endDate = moment().subtract(6, 'hours')
@@ -159,6 +155,37 @@ describe('Report', () => {
         endDate
       })
       expect(reports).to.have.lengthOf(3)
+      done()
+    })
+  })
+
+  describe('findWithinBounds', () => {
+    test('get summary for reports', async done => {
+      // the beforeEach creates a male user, create a female for the stats
+      const femaleUser = await userModel.putUser({
+        name: 'Olivia',
+        email: 'oli@gmail.com',
+        birthday: '11/23/2017',
+        gender: 'female',
+        facebookProvider: {
+          id: '106458953461566',
+          token: 'token'
+        }
+      })
+      // first half male
+      for (let i = 0; i < fixture.length / 2; i++) {
+        await reportModel.putReport({ ...fixture[i], user: newUserId })
+      }
+      // second half female
+      for (let i = fixture.length / 2; i < fixture.length; i++) {
+        await reportModel.putReport({ ...fixture[i], user: femaleUser._id })
+      }
+      const bounds = {
+        lower: [-34.616147, -58.498758],
+        upper: [-34.551686, -58.419478]
+      }
+      const summary = await reportModel.getSummary(bounds, 3)
+      console.log(summary)
       done()
     })
   })

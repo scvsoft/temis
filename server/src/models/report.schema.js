@@ -27,7 +27,8 @@ reportSchema.statics.findWithinBounds = function(bounds, filters) {
 
   const query = this.find(queryFilters)
     .where('location')
-    .box([bounds.minLng, bounds.minLat], [bounds.maxLng, bounds.maxLat])
+    .box(bounds.lower, bounds.upper)
+    .select('location user')
     .populate('user', 'gender')
 
   return query
