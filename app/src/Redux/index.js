@@ -4,7 +4,7 @@ import { persistStore, persistCombineReducers } from 'redux-persist'
 import { combineEpics, createEpicMiddleware } from 'redux-observable'
 import storage from 'redux-persist/es/storage'
 import reduxReset from 'redux-reset'
-import { reducer as report } from './Report'
+import { epic as reportEpic } from './Report'
 import { reducer as user, epic as userEpic } from './User'
 
 const config = {
@@ -15,11 +15,10 @@ const config = {
 const middleware = []
 
 const rootReducer = persistCombineReducers(config, {
-  user,
-  report
+  user
 })
 
-const rootEpic = combineEpics(userEpic)
+const rootEpic = combineEpics(userEpic, reportEpic)
 
 middleware.push(createEpicMiddleware(rootEpic))
 
