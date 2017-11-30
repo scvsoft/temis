@@ -1,8 +1,10 @@
 import { Schema } from 'mongoose'
 
+export const genders = ['other', 'female', 'male', 'unspecified']
+
 export const userSchema = new Schema({
   name: { type: String },
-  gender: { type: String },
+  gender: { type: String, enum: genders },
   birthday: { type: Date },
   email: {
     type: String,
@@ -10,6 +12,7 @@ export const userSchema = new Schema({
     trim: true,
     unique: true
   },
+  anonymous: { type: Boolean },
   facebookProvider: {
     type: {
       id: String,

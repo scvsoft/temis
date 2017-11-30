@@ -31,8 +31,8 @@ describe('Server', () => {
     createToken = authenticationControllerBuilder().createToken
   })
 
-  beforeEach(() => {
-    mongoose.connection.dropDatabase()
+  beforeEach(async () => {
+    await mongoose.connection.dropDatabase()
     process.env.JWT_EXPIRATION = '2h'
 
     nock('https://graph.facebook.com:443', { encodedQueryParams: true })
@@ -43,6 +43,16 @@ describe('Server', () => {
         name: 'Margaret Wongberg',
         email: 'margaret_zldursm_wongberg@tfbnw.net',
         gender: 'female'
+      })
+
+    nock('https://graph.facebook.com:443', { encodedQueryParams: true })
+      .get(/\/me$/)
+      .query(queryObj => queryObj.access_token === 'valid_token_other_gender')
+      .reply(200, {
+        id: '106458953461566',
+        name: 'Margaret Bison',
+        email: 'margaret_bison@tfbnw.net',
+        gender: 'unknown'
       })
 
     nock('https://graph.facebook.com:443', { encodedQueryParams: true })
@@ -83,6 +93,21 @@ describe('Server', () => {
           done()
         })
     })
+
+    test('normalizes gender if other than male or female', done => {
+      chai
+        .request(server)
+        .post('/authentication/facebook')
+        .send({ access_token: 'valid_token_other_gender' })
+        .end((err, res) => {
+          expect(res).to.have.status(201)
+          expect(res.body).to.have.property('_id')
+          expect(res.body).to.have.property('name', 'Margaret Bison')
+          expect(res.body).to.have.property('gender', 'other')
+          expect(res).to.have.header('x-auth-token')
+          done()
+        })
+    })
   })
 
   describe('Sign in', () => {
@@ -119,6 +144,7 @@ describe('Server', () => {
         email: 'xxx@gmail.com',
         birthday: '11/23/2017',
         gender: 'male',
+        anonymous: true,
         facebookProvider: {
           id: '106458953461566',
           token: 'token'
@@ -136,6 +162,7 @@ describe('Server', () => {
             .to.have.property('_id')
             .to.be.id(mongoose.Types.ObjectId(newUser._id))
           expect(res.body).to.have.property('email', 'xxx@gmail.com')
+          expect(res.body).to.have.property('anonymous', true)
           done()
         })
     })
@@ -260,6 +287,32 @@ describe('Server', () => {
         .set('x-auth-token', token)
         .end((err, res) => {
           expect(res).to.have.status(401)
+          done()
+        })
+    })
+
+    test('fails to create a user with an invalid gender value', async done => {
+      const userProperties = {
+        name: 'Rod',
+        email: 'rod@gmail.com',
+        birthday: '11/23/2017',
+        gender: 'male',
+        facebookProvider: {
+          id: '106458953461566',
+          token: 'token'
+        }
+      }
+      const newUser = await userModel.putUser(userProperties)
+      const token = createToken({ id: newUser._id })
+
+      chai
+        .request(server)
+        .put(`/users/${newUser._id}`)
+        .send({ ...userProperties, gender: 'unknown' })
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res).to.have.status(400)
+          expect(res.body).to.have.property('errors')
           done()
         })
     })

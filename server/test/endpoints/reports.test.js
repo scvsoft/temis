@@ -37,7 +37,7 @@ describe('Server', () => {
   })
 
   beforeEach(async () => {
-    mongoose.connection.dropDatabase()
+    await mongoose.connection.dropDatabase()
 
     const user = await userModel.putUser({
       name: 'Rod',

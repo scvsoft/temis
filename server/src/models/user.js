@@ -1,4 +1,4 @@
-import { userSchema } from './user.schema'
+import { userSchema, genders } from './user.schema'
 
 // TODO: Abstract this, it's similar to the Report model
 export default mongoose => {
@@ -29,5 +29,12 @@ export default mongoose => {
     return user.save()
   }
 
-  return { getUser, getUserByFacebookId, putUser }
+  const normalizeGender = gender => {
+    if (!genders.includes(gender)) {
+      return genders[0]
+    }
+    return gender
+  }
+
+  return { getUser, getUserByFacebookId, putUser, normalizeGender }
 }
