@@ -13,7 +13,7 @@ import {
   DatePickerInput
 } from 'app/Components/Inputs'
 import Button from 'app/Components/Button'
-import { GenderEnum } from 'app/Redux/User'
+import UserActions, { GenderEnum } from 'app/Redux/User'
 
 import styles from './style'
 
@@ -30,7 +30,6 @@ class Profile extends Component {
   }
 
   render() {
-    console.tron.log(this.state)
     const { name, gender, birthday, anonymous } = this.state
     return (
       <DefaultLayout>
@@ -69,6 +68,7 @@ class Profile extends Component {
         </FormBox>
         <Button
           onPress={() => {
+            this.props.submit(this.state)
             this.props.navigator.dismissModal()
           }}
           text={I18n.t('screens.profile.button')}
@@ -79,9 +79,11 @@ class Profile extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user.data
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  submit: UserActions.update
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
