@@ -122,6 +122,32 @@ describe('Report', () => {
     })
   })
 
+  describe('getFrequencyStats', () => {
+    test('returns the frequency in days', () => {
+      const minDate = moment().subtract(5, 'days')
+      const maxDate = moment()
+      const frequencyStats = reportModel.getFrequencyStats(10, minDate, maxDate)
+      expect(frequencyStats).to.have.property('unit', 'days')
+      expect(frequencyStats.frequency).to.equal(2)
+    })
+
+    test('returns the frequency in weeks', () => {
+      const minDate = moment().subtract(8, 'days')
+      const maxDate = moment()
+      const frequencyStats = reportModel.getFrequencyStats(5, minDate, maxDate)
+      expect(frequencyStats).to.have.property('unit', 'weeks')
+      expect(frequencyStats.frequency).to.equal(5)
+    })
+
+    test('returns the frequency in weeks', () => {
+      const minDate = moment().subtract(3, 'weeks')
+      const maxDate = moment()
+      const frequencyStats = reportModel.getFrequencyStats(57, minDate, maxDate)
+      expect(frequencyStats).to.have.property('unit', 'weeks')
+      expect(frequencyStats.frequency).to.equal(19)
+    })
+  })
+
   describe('findWithinBounds', () => {
     test('returns reports inside the boundaries', async done => {
       for (const report of fixture) {
@@ -187,6 +213,7 @@ describe('Report', () => {
       const summary = await reportModel.getSummary(bounds, 1)
       const expectedSummary = {
         genderStats: { male: 3, female: 2 },
+        frequencyStats: { frequency: 5, unit: 'months' },
         clusters: [
           { point: [-34.565409, -58.465604], total: 2 },
           { point: [-34.569548, -58.427175], total: 1 },
@@ -194,7 +221,6 @@ describe('Report', () => {
           { point: [-34.587916, -58.467464], total: 1 }
         ]
       }
-
       expect(summary).to.deep.equal(expectedSummary)
       done()
     })
