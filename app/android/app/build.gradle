@@ -151,6 +151,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-locale')
     compile project(':react-native-navigation')
     compile project(':react-native-i18n')
     compile project(':react-native-facebook-login')
