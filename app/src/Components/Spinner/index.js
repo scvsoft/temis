@@ -5,11 +5,7 @@ import styles from './style'
 export default class Spinner extends Component {
   render() {
     return this.props.visible ? (
-      <TouchableWithoutFeedback
-        onPress={() => {
-          console.tron.log('PRESS')
-        }}
-      >
+      <TouchableWithoutFeedback>
         <View style={styles.container}>
           <ActivityIndicator size="large" />
         </View>
