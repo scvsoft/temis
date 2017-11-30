@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose'
 
-export const genders = ['other', 'female', 'male']
+export const genders = ['other', 'female', 'male', 'unspecified']
 
 export const userSchema = new Schema({
   name: { type: String },

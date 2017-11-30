@@ -31,8 +31,8 @@ describe('Server', () => {
     createToken = authenticationControllerBuilder().createToken
   })
 
-  beforeEach(() => {
-    mongoose.connection.dropDatabase()
+  beforeEach(async () => {
+    await mongoose.connection.dropDatabase()
     process.env.JWT_EXPIRATION = '2h'
 
     nock('https://graph.facebook.com:443', { encodedQueryParams: true })
