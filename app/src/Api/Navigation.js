@@ -7,7 +7,8 @@ const navStyle = {
   navBarTextColor: colors.title,
   statusBarTextColorScheme: 'light',
   navigationBarColor: colors.mainDarker,
-  statusBarColor: colors.mainDarker
+  statusBarColor: colors.mainDarker,
+  navBarButtonColor: colors.title
 }
 
 const tabNames = ['help', 'reports', 'insights', 'alerts', 'settings']
@@ -26,7 +27,7 @@ const tabs = tabNames.map(tabName => ({
   title: I18n.t(`screens.${tabName}.title`)
 }))
 
-export const goHome = () => {
+export const goHome = firstTime => {
   Navigation.startTabBasedApp({
     tabs,
     tabsStyle,
@@ -35,6 +36,18 @@ export const goHome = () => {
       ...navStyle
     }
   })
+
+  // this is quite a nasty hack, because unfortunately startTabBasedApp
+  // does not offer a callback, and on Android it seems that pushing a modal
+  // immediately is "too soon" and then it doesn't show
+  setTimeout(() => {
+    if (firstTime) {
+      Navigation.showModal({
+        screen: 'temis.profile',
+        title: I18n.t('screens.profile.title')
+      })
+    }
+  }, 1)
 }
 
 export const triggerSignIn = () => {

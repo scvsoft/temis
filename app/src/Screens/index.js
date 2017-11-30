@@ -1,6 +1,7 @@
 import { Navigation } from 'react-native-navigation'
 
 import SignIn from './SignIn'
+import Profile from './Profile'
 import Help from './Help'
 import ComingSoon from './ComingSoon'
 
@@ -9,6 +10,7 @@ export default (store, Provider) => {
     Navigation.registerComponent(name, () => component, store, Provider)
   }
   registerScreen('temis.signIn', SignIn)
+  registerScreen('temis.profile', Profile)
   registerScreen('temis.help', Help)
   registerScreen('temis.reports')
   registerScreen('temis.insights')

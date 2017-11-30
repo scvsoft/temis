@@ -2,6 +2,18 @@ export default {
   panicButton: {
     text: '¡NECESITO AYUDA!'
   },
+  label: {
+    confirm: 'Aceptar',
+    cancel: 'Cancelar'
+  },
+  enum: {
+    gender: {
+      male: 'Masculino',
+      female: 'Femenino',
+      other: 'Otro',
+      unspecified: 'Prefiero no decir'
+    }
+  },
   screens: {
     signIn: {
       title: 'Bienvenido',
@@ -14,6 +26,21 @@ export default {
         'Lo que escribas en Temis podrá ser siempre anónimo si así lo deseas y ' +
         'sólo capturaremos tu sexo y edad con fines estadísticos.',
       button: 'Continúa con Facebook'
+    },
+    profile: {
+      title: 'Completá tu registro',
+      label: {
+        name: 'Tu nombre y apellido',
+        birthday: 'Por favor indicá tu fecha de nacimiento',
+        gender: 'Seleccioná con qué sexo te identificás',
+        anon: 'Deseo pubilicar anónimamente'
+      },
+      description:
+        'Podés elegir publicar y comentar anónimamente ' +
+        'por defecto en la aplicación. Luego podrás cambiarlo en tus ' +
+        'preferencias. Cada vez que crees un reporte nuevo, te daremos ' +
+        'la opción de hacerlo anónimamente o utilizando tus datos reales.',
+      button: 'Finalizar registro'
     },
     help: {
       title: '¡Ayuda!',

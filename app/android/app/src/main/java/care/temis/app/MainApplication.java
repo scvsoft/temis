@@ -2,8 +2,9 @@ package care.temis.app;
 
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.facebook.react.ReactPackage;
-import com.reactnativenavigation.NavigationApplication;
 import com.magus.fblogin.FacebookLoginPackage;
+import com.reactnativenavigation.NavigationApplication;
+import io.fixd.rctlocale.RCTLocalePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +18,8 @@ public class MainApplication extends NavigationApplication {
   protected List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(
       new FacebookLoginPackage(),
-      new RNI18nPackage()
+      new RNI18nPackage(),
+      new RCTLocalePackage()
     );
   }
 
