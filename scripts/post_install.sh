@@ -3,7 +3,7 @@ set -e
 
 cd ~/temis/server
 
-mkdir logs
+mkdir logs --parent
 
 npm install
 npm run build
