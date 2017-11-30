@@ -19,7 +19,6 @@ class Help extends Component {
         <View style={styles.textContainer}>
           <Text style={styles.descText}>
             {I18n.t('screens.help.instructions')}
-            Reports: {this.props.count}
           </Text>
           <Text style={styles.descText}>
             {I18n.t('screens.help.reportNote')}
@@ -34,7 +33,7 @@ class Help extends Component {
   }
 }
 
-const mapStateToProps = state => state.report
+const mapStateToProps = state => ({})
 
 const mapDispatchToProps = ReportActions
 
