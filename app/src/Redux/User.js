@@ -50,3 +50,5 @@ export const epic = (action$, store) =>
       })
       .catch(error => Observable.of(Creators.loginFailed(error)))
   )
+
+export const GenderEnum = ['male', 'female', 'other', 'unspecified']

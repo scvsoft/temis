@@ -5,6 +5,7 @@ import DatePicker from 'react-native-datepicker'
 import I18n from 'app/Locales'
 import styles, { datePickerInner } from './style'
 import { colors, images } from 'app/Theme'
+import moment from 'moment'
 
 export default class InputBox extends Component {
   render() {
@@ -80,28 +81,35 @@ export class PickerInput extends Component {
         style={styles.picker}
         label={this.props.label}
         labelHeight={14}
-        data={[
-          { value: 'Male' },
-          { value: 'Female' },
-          { value: 'Other' },
-          { value: 'Prefer not to say' }
-        ]}
+        {...this.props}
       />
     )
   }
 }
 
 export class DatePickerInput extends Component {
+  displayFormat = 'LL'
+  valueFormat = 'YYYY-MM-DD'
+
+  formatDate = value =>
+    value ? moment(value, this.valueFormat).format(this.displayFormat) : null
+
+  formatValue = date =>
+    moment(date, this.displayFormat).format(this.valueFormat)
+
   render() {
     return (
       <InputBox label={this.props.label}>
         <DatePicker
-          format="LL"
+          format={this.displayFormat}
           iconSource={images['icon.calendar']}
           style={styles.datePicker}
           customStyles={datePickerInner}
+          placeholder={' '}
           confirmBtnText={I18n.t('label.confirm')}
           cancelBtnText={I18n.t('label.cancel')}
+          date={this.formatDate(this.props.value)}
+          onDateChange={date => this.props.onChange(this.formatValue(date))}
         />
       </InputBox>
     )

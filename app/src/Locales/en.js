@@ -6,6 +6,14 @@ export default {
     confirm: 'OK',
     cancel: 'Cancel'
   },
+  enum: {
+    gender: {
+      male: 'Male',
+      female: 'Female',
+      other: 'Other',
+      unspecified: 'Prefer not to say'
+    }
+  },
   screens: {
     signIn: {
       title: 'Welcome',
