@@ -16,7 +16,7 @@ if (Config.resetStoresOnStartup) {
 }
 
 persistor.subscribe(() => {
-  if (store.getState().user.id) {
+  if (store.getState().user.data.id) {
     goHome()
   } else {
     triggerSignIn()
