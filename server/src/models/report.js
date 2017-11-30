@@ -1,4 +1,5 @@
 import { reportSchema } from './report.schema'
+import supercluster from 'supercluster'
 
 // TODO: Abstract this, it's similar to the User model
 export default mongoose => {
@@ -31,5 +32,38 @@ export default mongoose => {
     return report.save()
   }
 
-  return { getReport, putReport }
+  const findWithinBounds = (bounds, filters) =>
+    Report.findWithinBounds(bounds, filters)
+
+  const getSummary = async (bounds, radius, filters) => {
+    // fetch elements, considering filters
+    const reports = await findWithinBounds(bounds, filters)
+    const genderStats = {}
+    const reportsLocations = []
+
+    // iterate reports
+    for (const report of reports) {
+      // build gender stats, build points
+      if (!genderStats[report.user.gender]) {
+        genderStats[report.user.gender] = 0
+      }
+      genderStats[report.user.gender]++
+      reportsLocations.push(report.location)
+    }
+
+    // create clusters
+    const index = supercluster({
+      radius,
+      maxZoom: 1
+    })
+    index.load(reportsLocations)
+    const clusters = index.getClusters(bounds, 1)
+
+    return {
+      genderStats,
+      clusters
+    }
+  }
+
+  return { getReport, putReport, findWithinBounds }
 }

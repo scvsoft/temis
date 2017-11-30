@@ -4,6 +4,8 @@ import dotenv from 'dotenv'
 import getMongoose from '../../src/models/mongoose'
 import getUsersModel from '../../src/models/user'
 import getReportsModel from '../../src/models/report'
+import fixture from '../fixtures/reports'
+import moment from 'moment'
 
 chai.use(chaid)
 
@@ -21,10 +23,11 @@ describe('Report', () => {
   })
 
   let newReportId
+  let newUserId
 
   const reportProperties = {
     description: 'My hand got stuck in the hand-dryer!',
-    location: [-34.60235, -58.454232]
+    location: [40.860941, -73.898504]
   }
 
   beforeEach(async () => {
@@ -41,7 +44,9 @@ describe('Report', () => {
       }
     })
 
-    reportProperties.user = newUser._id
+    newUserId = newUser._id
+
+    reportProperties.user = newUserId
 
     const newReport = await reportModel.putReport(reportProperties)
 
@@ -114,6 +119,47 @@ describe('Report', () => {
         expect(err.errors).to.have.property('user')
         done()
       }
+    })
+  })
+
+  describe('findWithinBounds', () => {
+    test('returns reports inside the boundaries', async done => {
+      for (const report of fixture) {
+        // TODO: do in parallel (maybe change model to accept multiple reports)
+        await reportModel.putReport({ ...report, user: newUserId })
+      }
+
+      const bounds = {
+        minLng: -34.616147,
+        minLat: -58.498758,
+        maxLng: -34.551686,
+        maxLat: -58.419478
+      }
+      const reports = await reportModel.findWithinBounds(bounds)
+      expect(reports).to.have.lengthOf(5)
+      done()
+    })
+
+    test('returns reports inside the boundaries filtering by start and end date', async done => {
+      for (const report of fixture) {
+        // TODO: do in parallel (maybe change model to accept multiple reports)
+        await reportModel.putReport({ ...report, user: newUserId })
+      }
+
+      const bounds = {
+        minLng: -34.616147,
+        minLat: -58.498758,
+        maxLng: -34.551686,
+        maxLat: -58.419478
+      }
+      const startDate = moment().subtract(25, 'days')
+      const endDate = moment().subtract(6, 'hours')
+      const reports = await reportModel.findWithinBounds(bounds, {
+        startDate,
+        endDate
+      })
+      expect(reports).to.have.lengthOf(3)
+      done()
     })
   })
 
