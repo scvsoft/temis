@@ -91,7 +91,7 @@ describe('User', () => {
       try {
         await userModel.putUser({
           name: 'Olivia',
-          email: 'yyy@gmail.com',
+          email: 'olivia@gmail.com',
           birthday: '11/23/2017',
           gender: 'unknown',
           facebookProvider: {
