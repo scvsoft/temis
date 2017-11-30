@@ -53,6 +53,14 @@ export default {
       reportNote: 'Si querés contarnos algo que ya te sucedió…',
       reportButton: 'PUBLICÁ QUE EXPERIENCIA VIVISTE'
     },
+    report: {
+      title: 'Publicá tu experiencia',
+      button: 'Publicá tu experiencia',
+      label: {
+        description: 'Describí la situación que viviste',
+        anon: 'Deseo pubilicar anónimamente'
+      }
+    },
     reports: {
       title: 'Reportes'
     },
