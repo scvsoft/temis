@@ -4,7 +4,12 @@ import getUsersModel from '../models/user'
 import getMongoose from '../models/mongoose'
 
 export default () => {
-  const { getUser, getUserByFacebookId, putUser } = getUsersModel(getMongoose())
+  const {
+    getUser,
+    getUserByFacebookId,
+    putUser,
+    normalizeGender
+  } = getUsersModel(getMongoose())
 
   const errorHandler = (err, req, res, next) => {
     // console.error("Error: ", err.name, err.message, err.status, err.stack)
@@ -43,7 +48,8 @@ export default () => {
       let isNew = false
       if (!currentUser) {
         isNew = true
-        currentUser = await putUser(req.user)
+        const gender = normalizeGender(req.user.gender)
+        currentUser = await putUser({ ...req.user, gender })
       }
 
       // prepare token for API

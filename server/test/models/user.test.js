@@ -19,7 +19,7 @@ describe('User', () => {
   })
 
   beforeEach(async () => {
-    mongoose.connection.dropDatabase()
+    await mongoose.connection.dropDatabase()
 
     const newUser = await userModel.putUser({
       name: 'Rod',
@@ -69,6 +69,7 @@ describe('User', () => {
           email: 'yyy@gmail.com',
           birthday: '11/23/2017',
           gender: 'female',
+          anonymous: true,
           facebookProvider: {
             id: 1001,
             token: 'token'
@@ -81,7 +82,27 @@ describe('User', () => {
         .to.have.property('_id')
         .to.be.id(mongoose.Types.ObjectId(newUserId))
       expect(updatedUser).to.have.property('name', 'Olivia')
+      expect(updatedUser).to.have.property('gender', 'female')
+      expect(updatedUser).to.have.property('anonymous', true)
       done()
+    })
+
+    test('fails if gender has not a valid value', async done => {
+      try {
+        await userModel.putUser({
+          name: 'Olivia',
+          email: 'olivia@gmail.com',
+          birthday: '11/23/2017',
+          gender: 'unknown',
+          facebookProvider: {
+            id: 1001,
+            token: 'token'
+          }
+        })
+      } catch (err) {
+        expect(err.errors).to.have.property('gender')
+        done()
+      }
     })
   })
 
@@ -100,6 +121,16 @@ describe('User', () => {
       // eslint-disable-next-line
       expect(user).to.be.null
       done()
+    })
+  })
+
+  describe('normalizeGender', () => {
+    test('normalizes an unknown gender', () => {
+      expect(userModel.normalizeGender('unknown')).to.equal('other')
+    })
+
+    test('returns the same gender as it is a valid one', () => {
+      expect(userModel.normalizeGender('female')).to.equal('female')
     })
   })
 
