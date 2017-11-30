@@ -92,6 +92,8 @@ certbot-auto --no-self-upgrade certonly
 service nginx reload
 EOF
 
+service nginx restart
+
 # install mongo
 cat <<EOF>/etc/yum.repos.d/mongodb-org-3.0.repo
 [mongodb-org-3.0]
@@ -102,7 +104,10 @@ enabled=1
 EOF
 
 yum install -y mongodb-org
-service mongod start
+
+if [ ! -f /var/run/mongodb/mongod.pid ]; then
+	service mongod start
+fi
 
 # add nodejs to yum
 curl --silent --location https://rpm.nodesource.com/setup_9.x | bash -
