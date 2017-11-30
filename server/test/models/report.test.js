@@ -159,7 +159,7 @@ describe('Report', () => {
     })
   })
 
-  describe('findWithinBounds', () => {
+  describe('getSummary', () => {
     test('get summary for reports', async done => {
       // the beforeEach creates a male user, create a female for the stats
       const femaleUser = await userModel.putUser({
@@ -184,8 +184,18 @@ describe('Report', () => {
         lower: [-34.616147, -58.498758],
         upper: [-34.551686, -58.419478]
       }
-      const summary = await reportModel.getSummary(bounds, 3)
-      console.log(summary)
+      const summary = await reportModel.getSummary(bounds, 1)
+      const expectedSummary = {
+        genderStats: { male: 3, female: 2 },
+        clusters: [
+          { point: [-34.565409, -58.465604], total: 2 },
+          { point: [-34.569548, -58.427175], total: 1 },
+          { point: [-34.584779, -58.452485], total: 1 },
+          { point: [-34.587916, -58.467464], total: 1 }
+        ]
+      }
+
+      expect(summary).to.deep.equal(expectedSummary)
       done()
     })
   })

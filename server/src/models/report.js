@@ -1,5 +1,5 @@
 import { reportSchema } from './report.schema'
-import getClusters from '../lib/clusters'
+import { getClusters } from '../lib/clusters'
 
 // TODO: Abstract this, it's similar to the User model
 export default mongoose => {
@@ -53,7 +53,7 @@ export default mongoose => {
 
     return {
       genderStats,
-      clusters: getClusters(reportsLocations, bounds)
+      clusters: getClusters(reportsLocations, radius)
     }
   }
 
