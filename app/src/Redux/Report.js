@@ -1,19 +1,21 @@
-import { createReducer, createActions } from 'reduxsauce'
+import { createActions } from 'reduxsauce'
+import { withAuth } from './User'
+import { sendReport } from 'app/Api/Backend'
 
-const INITIAL_STATE = {
-  count: 0
-}
+const INITIAL_STATE = {}
 
 const { Types, Creators } = createActions({
-  report: null
+  report: ['reportData'],
+  reportSaved: null,
+  reportFailed: null
 })
-
-export const report = state => ({ ...state, count: state.count + 1 })
 
 export default Creators
 
 export const ReportTypes = Types
 
-export const reducer = createReducer(INITIAL_STATE, {
-  [Types.REPORT]: report
-})
+export const epic = (action$, store) =>
+  action$
+    .ofType(Types.REPORT)
+    .flatMap(({ reportData }) => sendReport(withAuth(store)(reportData)))
+    .map(({ ok }) => (ok ? Creators.reportSaved() : Creators.reportFailed()))

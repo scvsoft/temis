@@ -52,6 +52,14 @@ export default {
         'If you want to tell us about something you’ve already experienced:',
       reportButton: 'REPORT YOUR EXPERIENCE'
     },
+    report: {
+      title: 'Share your experience',
+      button: 'Share your experience',
+      label: {
+        description: 'Describe the situation you experienced',
+        anon: 'Publish this report anonymously'
+      }
+    },
     reports: {
       title: 'Reports'
     },
