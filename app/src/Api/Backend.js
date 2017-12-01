@@ -31,3 +31,5 @@ export const loginUser = access_token =>
 
 export const updateUser = newData =>
   backendApi.put(`users/${newData.id}`, newData)
+
+export const sendReport = reportData => backendApi.post(`reports`, reportData)

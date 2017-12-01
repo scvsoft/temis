@@ -40,7 +40,7 @@ export const logout = state => INITIAL_STATE
 
 export const update = (state, { newData }) => ({
   ...state,
-  data: { ...state.data, newData }
+  data: { ...state.data, ...newData }
 })
 
 export default Creators
