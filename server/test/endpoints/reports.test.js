@@ -8,6 +8,7 @@ import authenticationControllerBuilder from '../../src/controllers/authenticatio
 import getUsersModel from '../../src/models/user'
 import getReportsModel from '../../src/models/report'
 import getMongoose from '../../src/models/mongoose'
+import fixture from '../fixtures/reports'
 
 chai.use(chaiHttp)
 chai.use(chaid)
@@ -155,6 +156,29 @@ describe('Server', () => {
         .end((err, res) => {
           expect(res).to.have.status(400)
           expect(res.body).to.have.property('errors')
+          done()
+        })
+    })
+  })
+
+  describe('Get Report summary', () => {
+    test('returns the summary for the loaded reports', async done => {
+      for (const report of fixture) {
+        // TODO: do in parallel (maybe change model to accept multiple reports)
+        await reportModel.putReport({ ...report, user: userId })
+      }
+
+      chai
+        .request(server)
+        .get(
+          '/reports/summary?bounds=-34.616147,-58.498758,-34.551686,-58.419478&radius=1'
+        )
+        .set('x-auth-token', token)
+        .end((err, res) => {
+          expect(res).to.have.status(200)
+          expect(res.body).to.have.property('genderStats')
+          expect(res.body).to.have.property('frequencyStats')
+          expect(res.body).to.have.property('clusters')
           done()
         })
     })

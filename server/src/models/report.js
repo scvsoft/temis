@@ -1,4 +1,6 @@
 import { reportSchema } from './report.schema'
+import { getClusters } from '../lib/clusters'
+import moment from 'moment'
 
 // TODO: Abstract this, it's similar to the User model
 export default mongoose => {
@@ -31,5 +33,67 @@ export default mongoose => {
     return report.save()
   }
 
-  return { getReport, putReport }
+  const findWithinBounds = (bounds, filters) =>
+    Report.findWithinBounds(bounds, filters)
+
+  const getFrequencyStats = (total, minDate, maxDate) => {
+    const units = ['hours', 'days', 'weeks', 'months', 'years']
+    let frequency
+    let unit
+
+    for (let i = 0; i < units.length; i++) {
+      const diff = moment(maxDate).diff(minDate, units[i])
+      if (diff < 1) {
+        break
+      }
+      frequency = total / diff
+      unit = units[i]
+    }
+
+    return {
+      frequency,
+      unit
+    }
+  }
+
+  const getSummary = async (bounds, radius, filters) => {
+    // fetch elements, considering filters
+    const reports = await findWithinBounds(bounds, filters)
+    const genderStats = {}
+    const reportsLocations = []
+    let total = 0
+    let minDate = reports[0].created_at
+    let maxDate = reports[0].created_at
+
+    // iterate reports
+    for (const report of reports) {
+      // build gender stats, build points
+      if (!genderStats[report.user.gender]) {
+        genderStats[report.user.gender] = 0
+      }
+      genderStats[report.user.gender]++
+      reportsLocations.push(report.location)
+      total++
+      if (moment(minDate).isAfter(report.created_at)) {
+        minDate = report.created_at
+      }
+      if (moment(maxDate).isBefore(report.created_at)) {
+        maxDate = report.created_at
+      }
+    }
+
+    return {
+      genderStats,
+      frequencyStats: getFrequencyStats(total, minDate, maxDate),
+      clusters: getClusters(reportsLocations, radius)
+    }
+  }
+
+  return {
+    getReport,
+    putReport,
+    findWithinBounds,
+    getSummary,
+    getFrequencyStats
+  }
 }
