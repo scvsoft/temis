@@ -55,6 +55,9 @@
       <meta-data
         android:name="com.facebook.sdk.ApplicationId"
         android:value="@string/fb_app_id" />
-
+      
+      <!-- bugsnag configuration-->
+      <meta-data android:name="com.bugsnag.android.API_KEY"
+             android:value="@string/bugsnag_api_key"/>
     </application>
 </manifest>

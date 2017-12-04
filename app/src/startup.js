@@ -4,6 +4,11 @@ import registerScreens from 'app/Screens'
 import createStore from 'app/Redux'
 import { Provider } from 'react-redux'
 import Config from 'app/Config/Settings'
+import { Client } from 'bugsnag-react-native'
+
+if (Config.trackErrors) {
+  const bugsnag = new Client()
+}
 
 const { store, persistor } = createStore()
 registerScreens(store, Provider)
