@@ -2,7 +2,7 @@ import getReportModel from '../models/report'
 import getMongoose from '../models/mongoose'
 
 export default () => {
-  const { getReport, putReport } = getReportModel(getMongoose())
+  const { getReport, putReport, getSummary } = getReportModel(getMongoose())
 
   const get = async (req, res) => {
     try {
@@ -27,5 +27,18 @@ export default () => {
     }
   }
 
-  return { get, post }
+  const summary = async (req, res) => {
+    const bounds = req.query.bounds.split(',')
+    const summary = await getSummary(
+      {
+        lower: [bounds[0], bounds[1]],
+        upper: [bounds[2], bounds[3]]
+      },
+      req.query.radius
+    )
+
+    res.status(200).json(summary)
+  }
+
+  return { get, post, summary }
 }
