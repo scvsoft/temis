@@ -2,7 +2,7 @@ import { FBLoginManager } from 'react-native-facebook-login'
 
 export const login = () =>
   new Promise((resolve, reject) => {
-    FBLoginManager.setLoginBehavior(FBLoginManager.LoginBehaviors.Web) // defaults to Native
+    FBLoginManager.setLoginBehavior(FBLoginManager.LoginBehaviors.Native) // defaults to Native
 
     FBLoginManager.loginWithPermissions(['email'], (error, data) => {
       if (!error && data && data.credentials) {
