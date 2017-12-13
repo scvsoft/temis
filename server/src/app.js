@@ -1,34 +1,30 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import helmet from 'helmet'
-import authenticationRoutesBuilder from './routes/authentication'
-import usersRoutesBuilder from './routes/users'
-import reportsRoutesBuilder from './routes/reports'
-import authenticationControllerBuilder from './controllers/authentication'
+import authenticationRoutes from './routes/authentication'
+import usersRoutes from './routes/users'
+import reportsRoutes from './routes/reports'
+import {
+  errorHandler,
+  authenticateRequest,
+  fetchCurrentUser
+} from './controllers/authentication'
 
-export default () => {
-  const app = express()
+const app = express()
 
-  const {
-    errorHandler,
-    authenticateRequest,
-    fetchCurrentUser
-  } = authenticationControllerBuilder()
+app.use(helmet())
 
-  app.use(helmet())
+app.use(bodyParser.json())
 
-  app.use(bodyParser.json())
+app.use('/authentication', authenticationRoutes)
 
-  app.use('/authentication', authenticationRoutesBuilder())
+app.use(authenticateRequest)
+app.use(fetchCurrentUser)
 
-  app.use(authenticateRequest)
-  app.use(fetchCurrentUser)
+app.use('/users', usersRoutes)
 
-  app.use('/users', usersRoutesBuilder())
+app.use('/reports', reportsRoutes)
 
-  app.use('/reports', reportsRoutesBuilder())
+app.use(errorHandler)
 
-  app.use(errorHandler)
-
-  return app
-}
+export default app

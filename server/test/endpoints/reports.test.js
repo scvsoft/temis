@@ -1,13 +1,13 @@
+import '../../src/bootstrap'
 import chai, { expect } from 'chai'
 import chaiHttp from 'chai-http'
 import chaid from 'chaid'
 import http from 'http'
-import dotenv from 'dotenv'
-import createApp from '../../src/app'
-import authenticationControllerBuilder from '../../src/controllers/authentication'
-import getUsersModel from '../../src/models/user'
-import getReportsModel from '../../src/models/report'
-import getMongoose from '../../src/models/mongoose'
+import mongoose from 'mongoose'
+import app from '../../src/app'
+import { createToken } from '../../src/controllers/authentication'
+import { putUser } from '../../src/models/user'
+import { putReport } from '../../src/models/report'
 import fixture from '../fixtures/reports'
 
 chai.use(chaiHttp)
@@ -16,31 +16,20 @@ chai.use(chaid)
 describe('Server', () => {
   let token
   let userId
-  let mongoose
-  let userModel
-  let reportModel
   let server
-  let createToken
 
   beforeAll(() => {
-    dotenv.config()
     // specific test settings
     process.env.MONGODB_DBNAME = 'temis-test'
     process.env.JWT_EXPIRATION = '2h'
 
-    mongoose = getMongoose()
-    userModel = getUsersModel(mongoose)
-    reportModel = getReportsModel(mongoose)
-
-    const app = createApp()
     server = http.createServer(app)
-    createToken = authenticationControllerBuilder().createToken
   })
 
   beforeEach(async () => {
     await mongoose.connection.dropDatabase()
 
-    const user = await userModel.putUser({
+    const user = await putUser({
       name: 'Rod',
       email: 'abc@gmail.com',
       birthday: '11/23/2017',
@@ -64,7 +53,7 @@ describe('Server', () => {
         user: userId
       }
 
-      const newReport = await reportModel.putReport(reportProperties)
+      const newReport = await putReport(reportProperties)
 
       chai
         .request(server)
@@ -90,7 +79,7 @@ describe('Server', () => {
         user: userId
       }
 
-      const newReport = await reportModel.putReport(reportProperties)
+      const newReport = await putReport(reportProperties)
 
       chai
         .request(server)
@@ -165,7 +154,7 @@ describe('Server', () => {
     test('returns the summary for the loaded reports', async done => {
       for (const report of fixture) {
         // TODO: do in parallel (maybe change model to accept multiple reports)
-        await reportModel.putReport({ ...report, user: userId })
+        await putReport({ ...report, user: userId })
       }
 
       chai

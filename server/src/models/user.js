@@ -1,40 +1,38 @@
+import mongoose from 'mongoose'
 import { userSchema, genders } from './user.schema'
 
 // TODO: Abstract this, it's similar to the Report model
-export default mongoose => {
-  const User = mongoose.model('User', userSchema)
 
-  const getUser = id => {
-    return User.findById(id)
-  }
+const User = mongoose.model('User', userSchema)
 
-  const getUserByFacebookId = facebookId => {
-    return User.findOne({ 'facebookProvider.id': facebookId })
-  }
+export const getUser = id => {
+  return User.findById(id)
+}
 
-  const putUser = async (userProperties, id) => {
-    let user
+export const getUserByFacebookId = facebookId => {
+  return User.findOne({ 'facebookProvider.id': facebookId })
+}
 
-    try {
-      if (id) {
-        user = await getUser(id)
-        user.set(userProperties)
-      } else {
-        user = new User(userProperties)
-      }
-    } catch (err) {
-      return err
+export const putUser = async (userProperties, id) => {
+  let user
+
+  try {
+    if (id) {
+      user = await getUser(id)
+      user.set(userProperties)
+    } else {
+      user = new User(userProperties)
     }
-
-    return user.save()
+  } catch (err) {
+    return err
   }
 
-  const normalizeGender = gender => {
-    if (!genders.includes(gender)) {
-      return genders[0]
-    }
-    return gender
-  }
+  return user.save()
+}
 
-  return { getUser, getUserByFacebookId, putUser, normalizeGender }
+export const normalizeGender = gender => {
+  if (!genders.includes(gender)) {
+    return genders[0]
+  }
+  return gender
 }

@@ -1,27 +1,27 @@
+import '../../src/bootstrap'
 import chai, { expect } from 'chai'
 import chaid from 'chaid'
-import dotenv from 'dotenv'
-import getUsersModel from '../../src/models/user'
-import getMongoose from '../../src/models/mongoose'
+import mongoose from 'mongoose'
+import {
+  getUser,
+  putUser,
+  getUserByFacebookId,
+  normalizeGender
+} from '../../src/models/user'
 
 chai.use(chaid)
 
 describe('User', () => {
-  let mongoose
-  let userModel
   let newUserId
 
   beforeAll(() => {
-    dotenv.config()
     process.env.MONGODB_DBNAME = 'temis-test'
-    mongoose = getMongoose()
-    userModel = getUsersModel(mongoose)
   })
 
   beforeEach(async () => {
     await mongoose.connection.dropDatabase()
 
-    const newUser = await userModel.putUser({
+    const newUser = await putUser({
       name: 'Rod',
       email: 'xxx@gmail.com',
       birthday: '11/23/2017',
@@ -36,7 +36,7 @@ describe('User', () => {
 
   describe('getUser', () => {
     test('returns an existing user', async done => {
-      const rod = await userModel.getUser(newUserId)
+      const rod = await getUser(newUserId)
       expect(rod)
         .to.have.property('_id')
         .to.be.id(mongoose.Types.ObjectId(newUserId))
@@ -47,7 +47,7 @@ describe('User', () => {
 
   describe('putUser', () => {
     test('creates a new user', async done => {
-      const newUser = await userModel.putUser({
+      const newUser = await putUser({
         name: 'Olivia',
         email: 'yyy@gmail.com',
         birthday: '11/23/2017',
@@ -63,7 +63,7 @@ describe('User', () => {
     })
 
     test('updates an existing user', async done => {
-      const updatedUser = await userModel.putUser(
+      const updatedUser = await putUser(
         {
           name: 'Olivia',
           email: 'yyy@gmail.com',
@@ -89,7 +89,7 @@ describe('User', () => {
 
     test('fails if gender has not a valid value', async done => {
       try {
-        await userModel.putUser({
+        await putUser({
           name: 'Olivia',
           email: 'olivia@gmail.com',
           birthday: '11/23/2017',
@@ -108,7 +108,7 @@ describe('User', () => {
 
   describe('getUserByFacebookId', () => {
     test('returns an existing user', async done => {
-      const rod = await userModel.getUserByFacebookId('106458953461566')
+      const rod = await getUserByFacebookId('106458953461566')
       expect(rod)
         .to.have.property('_id')
         .to.be.id(mongoose.Types.ObjectId(newUserId))
@@ -117,7 +117,7 @@ describe('User', () => {
     })
 
     test('returns null if the user does not exists', async done => {
-      const user = await userModel.getUserByFacebookId(1002)
+      const user = await getUserByFacebookId(1002)
       // eslint-disable-next-line
       expect(user).to.be.null
       done()
@@ -126,11 +126,11 @@ describe('User', () => {
 
   describe('normalizeGender', () => {
     test('normalizes an unknown gender', () => {
-      expect(userModel.normalizeGender('unknown')).to.equal('other')
+      expect(normalizeGender('unknown')).to.equal('other')
     })
 
     test('returns the same gender as it is a valid one', () => {
-      expect(userModel.normalizeGender('female')).to.equal('female')
+      expect(normalizeGender('female')).to.equal('female')
     })
   })
 

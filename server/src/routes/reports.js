@@ -1,14 +1,10 @@
 import express from 'express'
-import reportsControllerBuilder from '../controllers/reports'
+import { get, post, summary } from '../controllers/reports'
 
-export default () => {
-  const router = express.Router()
+const router = express.Router()
 
-  const { get, post, summary } = reportsControllerBuilder()
+router.get('/summary', summary)
+router.get('/:reportId', get)
+router.post('/', post)
 
-  router.get('/summary', summary)
-  router.get('/:reportId', get)
-  router.post('/', post)
-
-  return router
-}
+export default router
