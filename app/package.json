@@ -10,7 +10,8 @@
     "test-ci": "npm run lint && npm run test",
     "lint": "npm run lint:js -- **/*.{js,jsx}",
     "lint:js": "prettier --config ../.prettierrc --write",
-    "lint:json": "jsonlint"
+    "lint:json": "jsonlint",
+    "postinstall": "rm node_modules/react-native-facebook-login/.git -rf"
   },
   "dependencies": {
     "apisauce": "^0.14.1",
@@ -18,9 +19,9 @@
     "moment": "^2.19.3",
     "ramda": "^0.25.0",
     "react": "16.0.0",
-    "react-native": "0.50.1",
+    "react-native": "^0.56.0",
     "react-native-datepicker": "^1.6.0",
-    "react-native-facebook-login": "git@github.com:yusukeshibata/react-native-facebook-login.git#feature/viewproptypes",
+    "react-native-facebook-login": "git+ssh://git@github.com/yusukeshibata/react-native-facebook-login/#feature/viewproptypes",
     "react-native-i18n": "^2.0.9",
     "react-native-locale": "0.0.18",
     "react-native-material-dropdown": "^0.6.0",
@@ -36,7 +37,7 @@
   "devDependencies": {
     "babel-jest": "21.2.0",
     "babel-preset-react-native": "4.0.0",
-    "codecov": "^3.0.0",
+    "codecov": "^3.0.4",
     "coveralls": "^3.0.0",
     "husky": "^0.14.3",
     "jest": "21.2.1",
@@ -44,7 +45,7 @@
     "lint-staged": "^4.3.0",
     "prettier": "^1.8.2",
     "react-test-renderer": "16.0.0",
-    "reactotron-react-native": "^1.12.3",
+    "reactotron-react-native": "^2.1.0",
     "reactotron-redux": "^1.12.2"
   },
   "jest": {
