@@ -34,7 +34,7 @@
     "jsonwebtoken": "^8.3.0",
     "kdbush": "^1.0.1",
     "moment": "^2.19.3",
-    "mongoose": "^4.13.14",
+    "mongoose": "^4.13.17",
     "passport": "^0.4.0",
     "passport-facebook-token": "^3.3.0"
   },
