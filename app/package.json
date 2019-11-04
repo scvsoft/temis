@@ -14,12 +14,12 @@
     "postinstall": "rm node_modules/react-native-facebook-login/.git -rf"
   },
   "dependencies": {
-    "apisauce": "^0.14.1",
+    "apisauce": "^0.15.0",
     "bugsnag-react-native": "^2.7.5",
     "moment": "^2.19.3",
     "ramda": "^0.25.0",
     "react": "16.0.0",
-    "react-native": "^0.56.0",
+    "react-native": "^0.60.0",
     "react-native-datepicker": "^1.6.0",
     "react-native-facebook-login": "git+ssh://git@github.com/yusukeshibata/react-native-facebook-login/#feature/viewproptypes",
     "react-native-i18n": "^2.0.9",
