@@ -1,34 +1,24 @@
+import '../../src/bootstrap'
 import nock from 'nock'
 import chai, { expect } from 'chai'
 import chaiHttp from 'chai-http'
 import chaid from 'chaid'
 import http from 'http'
-import dotenv from 'dotenv'
-import createApp from '../../src/app'
-import authenticationControllerBuilder from '../../src/controllers/authentication'
-import getUsersModel from '../../src/models/user'
-import getMongoose from '../../src/models/mongoose'
+import mongoose from 'mongoose'
+import app from '../../src/app'
+import { createToken } from '../../src/controllers/authentication'
+import { putUser } from '../../src/models/user'
 
 chai.use(chaiHttp)
 chai.use(chaid)
 
 describe('Server', () => {
-  let mongoose
-  let userModel
   let server
-  let createToken
 
   beforeAll(() => {
-    dotenv.config()
     // specific test settings
     process.env.MONGODB_DBNAME = 'temis-test'
-
-    mongoose = getMongoose()
-    userModel = getUsersModel(mongoose)
-
-    const app = createApp()
     server = http.createServer(app)
-    createToken = authenticationControllerBuilder().createToken
   })
 
   beforeEach(async () => {
@@ -112,7 +102,7 @@ describe('Server', () => {
 
   describe('Sign in', () => {
     test('returns 200, the JWT token and the profile when the user is already registered', async done => {
-      await userModel.putUser({
+      await putUser({
         name: 'Rod',
         email: 'xxx@gmail.com',
         birthday: '11/23/2017',
@@ -139,7 +129,7 @@ describe('Server', () => {
 
   describe('Get User profile', () => {
     test('returns the profile if JWT token is present and valid', async done => {
-      const newUser = await userModel.putUser({
+      const newUser = await putUser({
         name: 'Rod',
         email: 'xxx@gmail.com',
         birthday: '11/23/2017',
@@ -192,7 +182,7 @@ describe('Server', () => {
     })
 
     test('returns an error if user doesnt match token (💣)', async done => {
-      const newUser = await userModel.putUser({
+      const newUser = await putUser({
         name: 'Rod',
         email: 'xxx@gmail.com',
         birthday: '11/23/2017',
@@ -227,7 +217,7 @@ describe('Server', () => {
           token: 'token'
         }
       }
-      const newUser = await userModel.putUser(userProperties)
+      const newUser = await putUser(userProperties)
       const token = createToken({ id: newUser._id })
 
       chai
@@ -277,7 +267,7 @@ describe('Server', () => {
           token: 'token'
         }
       }
-      const newUser = await userModel.putUser(userProperties)
+      const newUser = await putUser(userProperties)
       const token = createToken({ id: newUser._id })
 
       chai
@@ -302,7 +292,7 @@ describe('Server', () => {
           token: 'token'
         }
       }
-      const newUser = await userModel.putUser(userProperties)
+      const newUser = await putUser(userProperties)
       const token = createToken({ id: newUser._id })
 
       chai

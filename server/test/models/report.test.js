@@ -1,25 +1,23 @@
+import '../../src/bootstrap'
 import chai, { expect } from 'chai'
+import mongoose from 'mongoose'
 import chaid from 'chaid'
-import dotenv from 'dotenv'
-import getMongoose from '../../src/models/mongoose'
-import getUsersModel from '../../src/models/user'
-import getReportsModel from '../../src/models/report'
+import { putUser } from '../../src/models/user'
+import {
+  putReport,
+  getReport,
+  getSummary,
+  getFrequencyStats,
+  findWithinBounds
+} from '../../src/models/report'
 import fixture from '../fixtures/reports'
 import moment from 'moment'
 
 chai.use(chaid)
 
 describe('Report', () => {
-  let mongoose
-  let userModel, reportModel
-
   beforeAll(() => {
-    dotenv.config()
     process.env.MONGODB_DBNAME = 'temis-test'
-
-    mongoose = getMongoose()
-    userModel = getUsersModel(mongoose)
-    reportModel = getReportsModel(mongoose)
   })
 
   let newReportId
@@ -33,7 +31,7 @@ describe('Report', () => {
   beforeEach(async () => {
     await mongoose.connection.dropDatabase()
 
-    const newUser = await userModel.putUser({
+    const newUser = await putUser({
       name: 'Rod',
       email: 'ppp@gmail.com',
       birthday: '11/23/2017',
@@ -48,14 +46,14 @@ describe('Report', () => {
 
     reportProperties.user = newUserId
 
-    const newReport = await reportModel.putReport(reportProperties)
+    const newReport = await putReport(reportProperties)
 
     newReportId = newReport._id
   })
 
   describe('getReport', () => {
     test('returns an existing report', async done => {
-      const report = await reportModel.getReport(newReportId)
+      const report = await getReport(newReportId)
       expect(report)
         .to.have.property('_id')
         .to.be.id(mongoose.Types.ObjectId(newReportId))
@@ -67,7 +65,7 @@ describe('Report', () => {
     })
 
     test('returns an existing report and expands user', async done => {
-      const report = await reportModel.getReport(newReportId, 'user')
+      const report = await getReport(newReportId, 'user')
       expect(report)
         .to.have.property('_id')
         .to.be.id(mongoose.Types.ObjectId(newReportId))
@@ -84,7 +82,7 @@ describe('Report', () => {
 
   describe('putReport', () => {
     test('creates a new report', async done => {
-      const newReport = await reportModel.putReport({
+      const newReport = await putReport({
         ...reportProperties,
         description: 'It happened again'
       })
@@ -95,7 +93,7 @@ describe('Report', () => {
     })
 
     test('updates an existing report', async done => {
-      const updatedReport = await reportModel.putReport(
+      const updatedReport = await putReport(
         {
           ...reportProperties,
           description: 'Please help!'
@@ -110,7 +108,7 @@ describe('Report', () => {
 
     test('fails with missing required fields', async done => {
       try {
-        await reportModel.putReport({
+        await putReport({
           date: Date.now
         })
       } catch (err) {
@@ -126,7 +124,7 @@ describe('Report', () => {
     test('returns the frequency in days', () => {
       const minDate = moment().subtract(5, 'days')
       const maxDate = moment()
-      const frequencyStats = reportModel.getFrequencyStats(10, minDate, maxDate)
+      const frequencyStats = getFrequencyStats(10, minDate, maxDate)
       expect(frequencyStats).to.have.property('unit', 'days')
       expect(frequencyStats.frequency).to.equal(2)
     })
@@ -134,7 +132,7 @@ describe('Report', () => {
     test('returns the frequency in weeks', () => {
       const minDate = moment().subtract(8, 'days')
       const maxDate = moment()
-      const frequencyStats = reportModel.getFrequencyStats(5, minDate, maxDate)
+      const frequencyStats = getFrequencyStats(5, minDate, maxDate)
       expect(frequencyStats).to.have.property('unit', 'weeks')
       expect(frequencyStats.frequency).to.equal(5)
     })
@@ -142,7 +140,7 @@ describe('Report', () => {
     test('returns the frequency in weeks', () => {
       const minDate = moment().subtract(3, 'weeks')
       const maxDate = moment()
-      const frequencyStats = reportModel.getFrequencyStats(57, minDate, maxDate)
+      const frequencyStats = getFrequencyStats(57, minDate, maxDate)
       expect(frequencyStats).to.have.property('unit', 'weeks')
       expect(frequencyStats.frequency).to.equal(19)
     })
@@ -152,14 +150,14 @@ describe('Report', () => {
     test('returns reports inside the boundaries', async done => {
       for (const report of fixture) {
         // TODO: do in parallel (maybe change model to accept multiple reports)
-        await reportModel.putReport({ ...report, user: newUserId })
+        await putReport({ ...report, user: newUserId })
       }
 
       const bounds = {
         lower: [-34.616147, -58.498758],
         upper: [-34.551686, -58.419478]
       }
-      const reports = await reportModel.findWithinBounds(bounds)
+      const reports = await findWithinBounds(bounds)
       expect(reports).to.have.lengthOf(5)
       done()
     })
@@ -167,7 +165,7 @@ describe('Report', () => {
     test('returns reports inside the boundaries filtering by start and end date', async done => {
       for (const report of fixture) {
         // TODO: do in parallel (maybe change model to accept multiple reports)
-        await reportModel.putReport({ ...report, user: newUserId })
+        await putReport({ ...report, user: newUserId })
       }
 
       const bounds = {
@@ -176,7 +174,7 @@ describe('Report', () => {
       }
       const startDate = moment().subtract(25, 'days')
       const endDate = moment().subtract(6, 'hours')
-      const reports = await reportModel.findWithinBounds(bounds, {
+      const reports = await findWithinBounds(bounds, {
         startDate,
         endDate
       })
@@ -188,7 +186,7 @@ describe('Report', () => {
   describe('getSummary', () => {
     test('get summary for reports', async done => {
       // the beforeEach creates a male user, create a female for the stats
-      const femaleUser = await userModel.putUser({
+      const femaleUser = await putUser({
         name: 'Olivia',
         email: 'oli@gmail.com',
         birthday: '11/23/2017',
@@ -200,17 +198,17 @@ describe('Report', () => {
       })
       // first half male
       for (let i = 0; i < fixture.length / 2; i++) {
-        await reportModel.putReport({ ...fixture[i], user: newUserId })
+        await putReport({ ...fixture[i], user: newUserId })
       }
       // second half female
       for (let i = fixture.length / 2; i < fixture.length; i++) {
-        await reportModel.putReport({ ...fixture[i], user: femaleUser._id })
+        await putReport({ ...fixture[i], user: femaleUser._id })
       }
       const bounds = {
         lower: [-34.616147, -58.498758],
         upper: [-34.551686, -58.419478]
       }
-      const summary = await reportModel.getSummary(bounds, 1)
+      const summary = await getSummary(bounds, 1)
       const expectedSummary = {
         genderStats: { male: 3, female: 2 },
         frequencyStats: { frequency: 5, unit: 'months' },
