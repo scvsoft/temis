@@ -46,7 +46,7 @@
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
     "chaid": "^1.0.2",
-    "codecov": "^3.0.4",
+    "codecov": "^3.6.5",
     "coveralls": "^3.0.2",
     "eslint": "^4.19.1",
     "eslint-config-react-app": "^2.1.0",
